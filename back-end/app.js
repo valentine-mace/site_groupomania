@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser =  require("body-parser");
 const path = require('path');
-const dotenv = require("dotenv");
-dotenv.config();
+const mysql = require('mysql');
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 
 const app = express();
@@ -17,6 +18,21 @@ next();
 
 app.use(bodyParser.json());
 app.use(express.json());
+
+const db = mysql.createConnection({
+
+  host: "127.0.0.1",
+
+  user: "root",
+
+  password: "root"
+
+});
+
+db.connect(function(err) {
+  if (err) throw err;
+  console.log("Connecté à la base de données MySQL!");
+});
 
 //pour multer
 app.use('/images', express.static(path.join(__dirname, 'images')));
