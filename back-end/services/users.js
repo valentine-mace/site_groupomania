@@ -18,19 +18,31 @@ async function getMultiple(page = 1){
 }
 
 async function createUser(user){
-  const result = await db.query(
-    `INSERT INTO users(identifier,name,surname,password)
-    VALUES
-    ('${user.identifier}', '${user.name}', '${user.surname}', '${user.password}');`
+  let identifier = user.identifier;
+  const rows = await db.query(
+    `SELECT id, identifier, name, surname, password
+    FROM users WHERE identifier = '${identifier}' `
   );
+  if(rows == []){
+    const result = await db.query(
+      `INSERT INTO users(identifier,name,surname,password)
+      VALUES
+      ('${user.identifier}', '${user.name}', '${user.surname}', '${user.password}');`
+    );
 
-  let message = 'Error in creating new user';
+    let message = 'Error in creating new user';
 
-  if (result.affectedRows) {
-    message = 'New user created successfully';
+    if (result.affectedRows) {
+      message = 'New user created successfully';
+    }
+
+    return {message};
+   
   }
-
-  return {message};
+  else{
+    let message = 'User already exists.';
+    return {message};
+}
 }
 
 async function deleteUser(id){
