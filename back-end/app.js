@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser =  require("body-parser");
-const userRoutes = require('./routes/user');
-//const path = require('path');
+const userRoutes = require('./routes/users');
 // const dotenv = require("dotenv");
 // dotenv.config();
 
@@ -27,6 +26,6 @@ app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
 app.use('/users', userRoutes);
-// app.use('/api/sauces', saucesRoutes);
+
 
 module.exports = app;

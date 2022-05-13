@@ -17,6 +17,24 @@ async function getMultiple(page = 1){
   }
 }
 
+async function create(user){
+  const result = await db.query(
+    `INSERT INTO users 
+    (identifier, name, surname, password) 
+    VALUES 
+    (${user.identifier}, ${user.name}, ${user.surname}, ${user.password})`
+  );
+
+  let message = 'Error in creating new user';
+
+  if (result.affectedRows) {
+    message = 'New user created successfully';
+  }
+
+  return {message};
+}
+
 module.exports = {
-  getMultiple
+  getMultiple,
+  create
 }
