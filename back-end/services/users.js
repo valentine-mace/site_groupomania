@@ -1,7 +1,7 @@
 const db = require('./db');
 const config = require('../config');
 
-async function getMultiple(){
+async function getUsers(){
   const rows = await db.query(
     `SELECT id, identifier, name, surname, password
     FROM users`
@@ -52,7 +52,7 @@ async function deleteUser(id){
 }
 
 module.exports = {
-  getMultiple,
+  getUsers,
   createUser,
   deleteUser
 }
