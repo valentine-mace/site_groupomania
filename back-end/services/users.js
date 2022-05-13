@@ -17,12 +17,11 @@ async function getMultiple(page = 1){
   }
 }
 
-async function create(user){
+async function createUser(user){
   const result = await db.query(
-    `INSERT INTO users 
-    (identifier, name, surname, password) 
-    VALUES 
-    (${user.identifier}, ${user.name}, ${user.surname}, ${user.password})`
+    `INSERT INTO users(identifier,name,surname,password)
+    VALUES
+    ('${user.identifier}', '${user.name}', '${user.surname}', '${user.password}');`
   );
 
   let message = 'Error in creating new user';
@@ -34,7 +33,22 @@ async function create(user){
   return {message};
 }
 
+async function deleteUser(id){
+  const result = await db.query(
+    `DELETE FROM users WHERE id=${id}`
+  );
+
+  let message = 'Error in deleting user';
+
+  if (result.affectedRows) {
+    message = 'User deleted successfully';
+  }
+
+  return {message};
+}
+
 module.exports = {
   getMultiple,
-  create
+  createUser,
+  deleteUser
 }

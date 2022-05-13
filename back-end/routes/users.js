@@ -14,9 +14,18 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   try {
-    res.json(await users.create(req.body));
+    res.json(await users.createUser(req.body));
   } catch (err) {
     console.error(`Error while creating new user`, err.message);
+    next(err);
+  }
+});
+
+router.delete('/:id', async function(req, res, next) {
+  try {
+    res.json(await users.deleteUser(req.params.id));
+  } catch (err) {
+    console.error(`Error while deleting user`, err.message);
     next(err);
   }
 });
