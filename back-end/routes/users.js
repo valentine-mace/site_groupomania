@@ -20,6 +20,15 @@ router.post('/signup', async function(req, res, next) {
   }
 });
 
+router.post('/login', async function(req, res, next) {
+  try {
+    res.json(await users.findUser(req.body));
+  } catch (err) {
+    console.error(`Error while finding user`, err.message);
+    next(err);
+  }
+});
+
 router.delete('/:id', async function(req, res, next) {
   try {
     res.json(await users.deleteUser(req.params.id));

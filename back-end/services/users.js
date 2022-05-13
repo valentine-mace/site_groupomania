@@ -15,7 +15,6 @@ async function createUser(user){
     `SELECT id, identifier, name, surname, password
     FROM users WHERE identifier = '${identifier}' `
   );
-  console.log(rows);
   if(rows.length == 0){
     const result = await db.query(
       `INSERT INTO users(identifier,name,surname,password)
@@ -38,6 +37,26 @@ async function createUser(user){
 }
 }
 
+async function findUser(user){
+  let identifier = user.identifier;
+  let password = user.password;
+  const rows = await db.query(
+    `SELECT id, identifier, name, surname, password
+    FROM users WHERE identifier = '${identifier}' AND password = '${password}' `
+  );
+  if(rows.length == 0){
+
+    let message = 'User doesnt exist';
+
+    return {message};
+   
+  }
+  else{
+    let message = 'Connect.';
+    return {message};
+}
+}
+
 async function deleteUser(id){
   const result = await db.query(
     `DELETE FROM users WHERE id=${id}`
@@ -55,5 +74,6 @@ async function deleteUser(id){
 module.exports = {
   getUsers,
   createUser,
-  deleteUser
+  deleteUser,
+  findUser
 }
