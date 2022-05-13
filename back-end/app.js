@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser =  require("body-parser");
-const path = require('path');
-const mysql = require('mysql');
+const userRoutes = require('./routes/user');
+//const path = require('path');
 // const dotenv = require("dotenv");
 // dotenv.config();
 
@@ -19,30 +19,14 @@ next();
 app.use(bodyParser.json());
 app.use(express.json());
 
-const db = mysql.createConnection({
-
-  host: "127.0.0.1",
-
-  user: "root",
-
-  password: "root"
-
-});
-
-db.connect(function(err) {
-  if (err) throw err;
-  console.log("Connecté à la base de données MySQL!");
- db.query("CREATE DATABASE ProjectDB", function (err, result) {
-      if (err) throw err;
-      console.log("Base de données créée !");
-    });
-});
-
 //pour multer
-app.use('/images', express.static(path.join(__dirname, 'images')));
+//app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //routes
-// app.use('/api/auth', userRoutes);
+app.get("/", (req, res) => {
+  res.json({ message: "ok" });
+});
+app.use('/users', userRoutes);
 // app.use('/api/sauces', saucesRoutes);
 
 module.exports = app;
