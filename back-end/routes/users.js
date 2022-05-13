@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const users = require('../services/users');
 
-/* GET programming languages. */
 router.get('/', async function(req, res, next) {
   try {
     res.json(await users.getUsers(req.query.page));
@@ -12,7 +11,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/signup', async function(req, res, next) {
   try {
     res.json(await users.createUser(req.body));
   } catch (err) {

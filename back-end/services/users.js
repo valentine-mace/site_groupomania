@@ -15,7 +15,8 @@ async function createUser(user){
     `SELECT id, identifier, name, surname, password
     FROM users WHERE identifier = '${identifier}' `
   );
-  if(rows == []){
+  console.log(rows);
+  if(rows.length == 0){
     const result = await db.query(
       `INSERT INTO users(identifier,name,surname,password)
       VALUES
