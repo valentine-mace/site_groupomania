@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const users = require('../services/users');
 
+//récupérer tous les utilisateurs
 router.get('/', async function(req, res, next) {
   try {
     res.json(await users.getUsers(req.query.page));
@@ -11,6 +12,7 @@ router.get('/', async function(req, res, next) {
   }
 });
 
+//créer un compte utilisateur
 router.post('/signup', async function(req, res, next) {
   try {
     res.json(await users.createUser(req.body));
@@ -20,6 +22,7 @@ router.post('/signup', async function(req, res, next) {
   }
 });
 
+//se connecter
 router.post('/login', async function(req, res, next) {
   try {
     res.json(await users.findUser(req.body));
@@ -29,11 +32,22 @@ router.post('/login', async function(req, res, next) {
   }
 });
 
+//supprimer un compte utilisateur
 router.delete('/:id', async function(req, res, next) {
   try {
     res.json(await users.deleteUser(req.params.id));
   } catch (err) {
     console.error(`Error while deleting user`, err.message);
+    next(err);
+  }
+});
+
+//modifier un compte utilisateur
+router.put('/:id', async function(req, res, next) {
+  try {
+    res.json(await users.updateUser(req.params.id, req.body));
+  } catch (err) {
+    console.error(`Error while updating user`, err.message);
     next(err);
   }
 });
