@@ -22,9 +22,6 @@ app.use(express.json());
 //app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //routes
-app.get("/", (req, res) => {
-  res.json({ message: "ok" });
-});
 app.use('/users', userRoutes);
 
 
