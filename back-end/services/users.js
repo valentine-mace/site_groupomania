@@ -210,6 +210,43 @@ async function getAllPosts(){
 
 }
 
+//fonction pour supprimer post
+async function updatePost(userId,id,post){
+  console.log("heinnn");
+  date = new Date();
+  //on convertit dans le bon format que accepte la bdd mysql
+  date = date.getUTCFullYear() + '-' +
+    ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + date.getUTCHours()).slice(-2) + ':' + 
+    ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + date.getUTCSeconds()).slice(-2);
+    const rows = await db.query(
+      `SELECT userId
+      FROM posts WHERE id = '${id}' `
+    );
+    if(rows[0].userId == userId){
+      const result = await db.query(
+      `UPDATE posts SET title="${post.title}", content="${post.content}", image="${post.image}", date="${date}"
+      WHERE id=${id};` 
+      );
+
+      let message = 'Error in updating post';
+
+      if (result.affectedRows) {
+        message = 'Post updated successfully';
+      }
+
+      return {message};
+
+    }
+    else{
+      let message = 'No authorization';
+      return {message};
+    }
+
+}
+
 
 module.exports = {
   getUsers,
@@ -220,5 +257,6 @@ module.exports = {
   createPost,
   deletePost,
   getAllPosts,
-  getPost
+  getPost,
+  updatePost
 }

@@ -92,6 +92,15 @@ router.delete('/:userId/post/:id', async function(req, res, next) {
   }
 });
 
+router.put('/:userId/post/:id', async function(req, res, next) {
+  try {
+    res.json(await users.updatePost(req.params.userId, req.params.id, req.body));
+  } catch (err) {
+    console.error(`Error while updating post`, err.message);
+    next(err);
+  }
+});
+
 
 
 module.exports = router;
