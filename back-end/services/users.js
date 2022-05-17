@@ -212,7 +212,6 @@ async function getAllPosts(){
 
 //fonction pour supprimer post
 async function updatePost(userId,id,post){
-  console.log("heinnn");
   date = new Date();
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +
