@@ -144,7 +144,30 @@ async function createPost(id,post){
 }
 
 //fonction pour supprimer post
-async function deletePost(id,post){
+async function deletePost(userId,id,post){
+  const rows = await db.query(
+    `SELECT userId
+    FROM posts WHERE id = '${id}' `
+  );
+  console.log(rows);
+  if(rows[0].userId == userId){
+    const result = await db.query(
+    `DELETE FROM posts WHERE id=${id}`
+    );
+
+    let message = 'Error in deleting post';
+
+    if (result.affectedRows) {
+      message = 'Post deleted successfully';
+    }
+
+    return {message};
+
+  }
+  else{
+    let message = 'No authorization';
+    return {message};
+  }
 
 }
 

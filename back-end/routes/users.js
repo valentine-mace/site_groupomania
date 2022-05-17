@@ -82,6 +82,16 @@ router.get('/:userId/post/:id', async function(req, res, next) {
   }
 });
 
+//supprimer un post
+router.delete('/:userId/post/:id', async function(req, res, next) {
+  try {
+    res.json(await users.deletePost(req.params.userId, req.params.id, req.query.page));
+  } catch (err) {
+    console.error(`Error while deleting post `, err.message);
+    next(err);
+  }
+});
+
 
 
 module.exports = router;
