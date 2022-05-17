@@ -65,7 +65,7 @@ router.post('/:userId/post', async function(req, res, next) {
 //récupérer tous les posts
 router.get('/:userId/posts', async function(req, res, next) {
   try {
-    res.json(await users.getAllPosts(req.query.page));
+    res.json(await users.getAllPosts(req.params.userId,req.query.page));
   } catch (err) {
     console.error(`Error while getting posts `, err.message);
     next(err);
@@ -75,7 +75,7 @@ router.get('/:userId/posts', async function(req, res, next) {
 //récupérer un post
 router.get('/:userId/post/:id', async function(req, res, next) {
   try {
-    res.json(await users.getPost(req.params.id, req.query.page));
+    res.json(await users.getPost(req.params.userId,req.params.id, req.query.page));
   } catch (err) {
     console.error(`Error while getting post `, err.message);
     next(err);

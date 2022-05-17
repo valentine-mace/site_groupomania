@@ -149,7 +149,6 @@ async function deletePost(userId,id,post){
     `SELECT userId
     FROM posts WHERE id = '${id}' `
   );
-  console.log(rows);
   if(rows[0].userId == userId){
     const result = await db.query(
     `DELETE FROM posts WHERE id=${id}`
@@ -172,21 +171,42 @@ async function deletePost(userId,id,post){
 }
 
 //récupérer un post
-async function getPost(id,post){
-  const rows = await db.query(
-    `SELECT id, title, content, image, date, userId
-    FROM posts WHERE id = '${id}' `
+async function getPost(userId,id,post){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}' `
   );
-  return rows;
+  if(userExist.length !== 0){
+    const rows = await db.query(
+      `SELECT id, title, content, image, date, userId
+      FROM posts WHERE id = '${id}' `
+    );
+    return rows;
+  }
+  else{
+    let message = "No authorization"
+    return message;
+  }
+
 }
 
 //récupérer tous les posts
 async function getAllPosts(){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(userExist.length !== 0){
   const rows = await db.query(
     `SELECT id, title, content, image, date,userId
     FROM posts`
   );
   return rows;
+  }
+  else{
+    let message = "No authorization"
+    return message;
+  }
 
 }
 
