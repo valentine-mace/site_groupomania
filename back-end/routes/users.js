@@ -33,9 +33,9 @@ router.post('/login', async function(req, res, next) {
 });
 
 //supprimer un compte utilisateur
-router.delete('/:id', async function(req, res, next) {
+router.delete('/:userId', async function(req, res, next) {
   try {
-    res.json(await users.deleteUser(req.params.id));
+    res.json(await users.deleteUser(req.params.userId));
   } catch (err) {
     console.error(`Error while deleting user`, err.message);
     next(err);
@@ -43,9 +43,9 @@ router.delete('/:id', async function(req, res, next) {
 });
 
 //modifier un compte utilisateur
-router.put('/:id', async function(req, res, next) {
+router.put('/:userId', async function(req, res, next) {
   try {
-    res.json(await users.updateUser(req.params.id, req.body));
+    res.json(await users.updateUser(req.params.userId, req.body));
   } catch (err) {
     console.error(`Error while updating user`, err.message);
     next(err);
@@ -53,9 +53,9 @@ router.put('/:id', async function(req, res, next) {
 });
 
 //poster un post
-router.post('/:id/post', async function(req, res, next) {
+router.post('/:userId/post', async function(req, res, next) {
   try {
-    res.json(await users.createPost(req.params.id,req.body));
+    res.json(await users.createPost(req.params.userId,req.body));
   } catch (err) {
     console.error(`Error while creating post`, err.message);
     next(err);
@@ -63,7 +63,7 @@ router.post('/:id/post', async function(req, res, next) {
 });
 
 //récupérer tous les posts
-router.get('/:id/posts', async function(req, res, next) {
+router.get('/:userId/posts', async function(req, res, next) {
   try {
     res.json(await users.getAllPosts(req.query.page));
   } catch (err) {
@@ -71,6 +71,17 @@ router.get('/:id/posts', async function(req, res, next) {
     next(err);
   }
 });
+
+//récupérer un post
+router.get('/:userId/post/:id', async function(req, res, next) {
+  try {
+    res.json(await users.getPost(req.params.id, req.query.page));
+  } catch (err) {
+    console.error(`Error while getting post `, err.message);
+    next(err);
+  }
+});
+
 
 
 module.exports = router;

@@ -150,11 +150,15 @@ async function deletePost(id,post){
 
 //récupérer un post
 async function getPost(id,post){
-
+  const rows = await db.query(
+    `SELECT id, title, content, image, date, userId
+    FROM posts WHERE id = '${id}' `
+  );
+  return rows;
 }
 
 //récupérer tous les posts
-async function getAllPosts(id,post){
+async function getAllPosts(){
   const rows = await db.query(
     `SELECT id, title, content, image, date,userId
     FROM posts`
