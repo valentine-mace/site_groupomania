@@ -2,6 +2,7 @@ const db = require('./db');
 const config = require('../config');
 const bcrypt = require('bcrypt');
 
+//fonction pour récupérer tous les utilisateurs
 async function getUsers(){
   const rows = await db.query(
     `SELECT id, identifier, name, surname, password
@@ -10,6 +11,7 @@ async function getUsers(){
   return rows;
 }
 
+//fonction pour créer un utilisateur - inscription
 async function createUser(user){
   let identifier = user.identifier;
   let password = user.password;
@@ -17,6 +19,7 @@ async function createUser(user){
     `SELECT id, identifier, name, surname, password
     FROM users WHERE identifier = '${identifier}' `
   );
+  //on vérifie d'abord que l'utilisateur n'existe pas
   if(rows.length == 0){
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
@@ -45,6 +48,7 @@ async function createUser(user){
   }
 }
 
+//fonction pour trouver un utilisateur - connexion
 async function findUser(user){
   let identifier = user.identifier;
   let password = user.password;
@@ -73,6 +77,7 @@ async function findUser(user){
 
 }
 
+//fonction pour supprimer un compte
 async function deleteUser(id){
   const result = await db.query(
     `DELETE FROM users WHERE id=${id}`
@@ -87,12 +92,8 @@ async function deleteUser(id){
   return {message};
 }
 
+//fonction pour mettre à jour les informations d'un utiliusateur
 async function updateUser(id, user){
-  const rows = await db.query(
-    `SELECT id, identifier, name, surname, password
-    FROM users WHERE id = '${id}' `
-  );
-  if(rows.length != 0){
     let password = user.password;
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
@@ -101,7 +102,6 @@ async function updateUser(id, user){
           WHERE id=${id};` 
         );
         
-
         let message = 'Error in updating new user';
 
         if (result.affectedRows) {
@@ -111,12 +111,6 @@ async function updateUser(id, user){
         return {message};
        });
     });
-  }
-  else{
-    let message = 'User doesnt exist.';
-    return {message};
-  }
-
 }
 
 
