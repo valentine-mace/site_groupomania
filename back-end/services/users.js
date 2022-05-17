@@ -28,6 +28,8 @@ async function createUser(user){
           VALUES
           ('${identifier}', '${user.name}', '${user.surname}', '${hash}', FALSE);`
         );
+        //on check que dans l'identifiant, l'utilisateur est un admin
+        //si c'est le cas on update la donnée "isAdmin"
         const isAdmin = db.query(
           `UPDATE users SET isAdmin = TRUE WHERE identifier LIKE "%@groupomania.admin"`
         );
