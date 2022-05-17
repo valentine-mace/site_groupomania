@@ -52,4 +52,25 @@ router.put('/:id', async function(req, res, next) {
   }
 });
 
+//poster un post
+router.post('/:id/post', async function(req, res, next) {
+  try {
+    res.json(await users.createPost(req.params.id,req.body));
+  } catch (err) {
+    console.error(`Error while creating post`, err.message);
+    next(err);
+  }
+});
+
+//récupérer tous les posts
+router.get('/:id/posts', async function(req, res, next) {
+  try {
+    res.json(await users.getAllPosts(req.query.page));
+  } catch (err) {
+    console.error(`Error while getting posts `, err.message);
+    next(err);
+  }
+});
+
+
 module.exports = router;

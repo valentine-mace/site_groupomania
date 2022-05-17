@@ -16,7 +16,7 @@ async function createUser(user){
   let identifier = user.identifier;
   let password = user.password;
   const rows = await db.query(
-    `SELECT id, identifier, name, surname, password
+    `SELECT userId, identifier, name, surname, password
     FROM users WHERE identifier = '${identifier}' `
   );
   //on vérifie d'abord que l'utilisateur n'existe pas
@@ -56,7 +56,7 @@ async function findUser(user){
   let password = user.password;
   //d'abord on vérifie que l'utilisateur existe
   const rows = await db.query(
-    `SELECT id, identifier, name, surname, password
+    `SELECT userId, identifier, name, surname, password
     FROM users WHERE identifier = '${identifier}' `
   );
   if(rows.length == 0){
@@ -82,7 +82,7 @@ async function findUser(user){
 //fonction pour supprimer un compte
 async function deleteUser(id){
   const result = await db.query(
-    `DELETE FROM users WHERE id=${id}`
+    `DELETE FROM users WHERE userId=${id}`
   );
 
   let message = 'Error in deleting user';
@@ -101,7 +101,7 @@ async function updateUser(id, user){
       bcrypt.hash(password, salt, function(err, hash) {
         const result = db.query(
           `UPDATE users SET name="${user.name}", surname="${user.surname}", password="${hash}"
-          WHERE id=${id};` 
+          WHERE userId=${id};` 
         );
         
         let message = 'Error in updating new user';
@@ -115,11 +115,63 @@ async function updateUser(id, user){
     });
 }
 
+//fonction pour créer un post
+async function createPost(id,post){
+  userId = id;
+  date = new Date();
+  //on convertit dans le bon format que accepte la bdd mysql
+  date = date.getUTCFullYear() + '-' +
+    ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + date.getUTCHours()).slice(-2) + ':' + 
+    ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + date.getUTCSeconds()).slice(-2);
+  // 'LOAD_FILE(${post.image})',
+  const result = db.query(
+    `INSERT INTO posts(title,content,date,image,userId)
+    VALUES
+    ('${post.title}', '${post.content}','${date}','${post.image}','${userId}');`
+  );
+
+
+  // let message = 'Error in creating new post';
+
+  // if (result.affectedRows) {
+  //   message = 'New post created successfully';
+  // }
+
+  // return {message};
+}
+
+//fonction pour supprimer post
+async function deletePost(id,post){
+
+}
+
+//récupérer un post
+async function getPost(id,post){
+
+}
+
+//récupérer tous les posts
+async function getAllPosts(id,post){
+  const rows = await db.query(
+    `SELECT id, title, content, image, date,userId
+    FROM posts`
+  );
+  return rows;
+
+}
+
 
 module.exports = {
   getUsers,
   createUser,
   deleteUser,
   findUser,
-  updateUser
+  updateUser,
+  createPost,
+  deletePost,
+  getAllPosts,
+  getPost
 }
