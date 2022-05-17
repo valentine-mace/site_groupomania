@@ -21,9 +21,12 @@ async function createUser(user){
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
         const result = db.query(
-          `INSERT INTO users(identifier,name,surname,password)
+          `INSERT INTO users(identifier,name,surname,password,isAdmin)
           VALUES
-          ('${identifier}', '${user.name}', '${user.surname}', '${hash}');`
+          ('${identifier}', '${user.name}', '${user.surname}', '${hash}', FALSE);`
+        );
+        const isAdmin = db.query(
+          `UPDATE users SET isAdmin = TRUE WHERE identifier LIKE "%@groupomania.admin"`
         );
 
         let message = 'Error in creating new user';
