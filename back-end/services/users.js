@@ -2,6 +2,81 @@ const db = require('./db');
 const config = require('../config');
 const bcrypt = require('bcrypt');
 
+async function initializeWebsite(){
+  const createOfficialUsers = await db.query(
+    `CREATE TABLE officialUsers
+    (
+        userId int(11) NOT NULL AUTO_INCREMENT,
+        name VARCHAR(100),
+        surname VARCHAR(100),
+        identifier VARCHAR(255),
+        PRIMARY KEY (userId)
+    );`
+  );
+    
+  const createOfficialUsersList = await db.query(
+    `INSERT INTO officialusers(identifier,name,surname)
+    VALUES
+    ("valentine.mace@groupomania.fr", "Valentine","Mace"),
+    ("lana.delrey@groupomania.admin", "Lana","Del Rey"),
+    ("melanie.martinez@groupomania.admin", "Melanie","Martinez"),
+    ("britney.spears@groupomania.fr", "Britney","Spears");`
+  );
+  
+  const createUsers = await db.query(
+    `CREATE TABLE users
+    (
+        userId int(11) NOT NULL AUTO_INCREMENT,
+        name VARCHAR(100),
+        surname VARCHAR(100),
+        identifier VARCHAR(255),
+        password VARCHAR(255),
+        isAdmin BOOLEAN,
+        PRIMARY KEY (userId)
+    );`
+  );
+
+  const createPosts = await db.query(
+    `CREATE TABLE posts
+    (
+        postId int(11) NOT NULL AUTO_INCREMENT,
+        title varchar(100),
+        content varchar(255),
+        date datetime,
+        image LONGBLOB NOT NULL,
+        userId int(11),
+        PRIMARY KEY (postId),
+        FOREIGN KEY (userId)
+       REFERENCES  users (userId)
+       ON DELETE CASCADE
+    );`
+  );
+
+  const bindTables = await db.query(
+    `SELECT * FROM users
+    NATURAL JOIN posts;`
+  );
+
+  const createComments = await db.query(
+    `CREATE TABLE comments
+    (
+      commentId int(11) NOT NULL AUTO_INCREMENT,
+      content varchar(255),
+      date datetime,
+      postId int(11),
+      PRIMARY KEY (commentId),
+      FOREIGN KEY (postId)
+      REFERENCES  posts (postId)
+      ON DELETE CASCADE
+    );`
+  );
+
+  const bindTablesPosts = await db.query(
+    `SELECT * FROM posts
+    NATURAL JOIN comments;`
+  );
+}
+
 //fonction pour récupérer tous les utilisateurs
 async function getUsers(){
   const rows = await db.query(
@@ -263,6 +338,7 @@ async function updatePost(userId,id,post){
 
 
 module.exports = {
+  initializeWebsite,
   getUsers,
   createUser,
   deleteUser,

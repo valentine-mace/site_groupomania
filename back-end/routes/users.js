@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const users = require('../services/users');
 
+//initialisation de la base de données avec création des tables
+router.get('/initialize', async function(req, res, next) {
+  try {
+    res.json(await users.initializeWebsite(req.query.page));
+  } catch (err) {
+    console.error(`Error while initializing `, err.message);
+    next(err);
+  }
+});
+
+
 //récupérer tous les utilisateurs
 router.get('/', async function(req, res, next) {
   try {
