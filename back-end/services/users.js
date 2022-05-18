@@ -45,6 +45,8 @@ async function initializeWebsite(){
         date datetime,
         image LONGBLOB NOT NULL,
         userId int(11),
+        likesNb int(11),
+        dislikesNb int(11),
         PRIMARY KEY (postId),
         FOREIGN KEY (userId)
        REFERENCES  users (userId)
@@ -64,6 +66,7 @@ async function initializeWebsite(){
       content varchar(255),
       date datetime,
       postId int(11),
+      userId int(11),
       PRIMARY KEY (commentId),
       FOREIGN KEY (postId)
       REFERENCES  posts (postId)
@@ -336,6 +339,23 @@ async function updatePost(userId,id,post){
 
 }
 
+async function createComment(userId,postId,comment){
+  date = new Date();
+  //on convertit dans le bon format que accepte la bdd mysql
+  date = date.getUTCFullYear() + '-' +
+    ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + date.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + date.getUTCHours()).slice(-2) + ':' + 
+    ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + date.getUTCSeconds()).slice(-2);
+  // 'LOAD_FILE(${post.image})',
+  const result = db.query(
+    `INSERT INTO comments(content,date,userId, postId)
+    VALUES
+    ('${comment.content}','${date}','${userId}','${postId}');`
+  );
+}
+
 
 module.exports = {
   initializeWebsite,
@@ -348,5 +368,6 @@ module.exports = {
   deletePost,
   getAllPosts,
   getPost,
-  updatePost
+  updatePost,
+  createComment
 }

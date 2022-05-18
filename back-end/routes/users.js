@@ -112,6 +112,33 @@ router.put('/:userId/post/:id', async function(req, res, next) {
   }
 });
 
+//poster un post
+router.post('/:userId/post/:postId/comment', async function(req, res, next) {
+  try {
+    res.json(await users.createComment(req.params.userId, req.params.postId, req.body));
+  } catch (err) {
+    console.error(`Error while creating comment`, err.message);
+    next(err);
+  }
+});
 
+router.delete('/:userId/post/:postId/comment/:commentId', async function(req, res, next) {
+  try {
+    res.json(await users.deletePost(req.params.userId, req.params.postId, req.params.commentId, req.query.page));
+  } catch (err) {
+    console.error(`Error while deleting comment `, err.message);
+    next(err);
+  }
+});
+
+//récupérer tous les posts
+router.get('/:userId/post/:postId/comments', async function(req, res, next) {
+  try {
+    res.json(await users.getAllComments(req.params.userId, req.params.postId, req.query.page));
+  } catch (err) {
+    console.error(`Error while getting comments `, err.message);
+    next(err);
+  }
+});
 
 module.exports = router;
