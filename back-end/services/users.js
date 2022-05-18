@@ -15,40 +15,52 @@ async function getUsers(){
 async function createUser(user){
   let identifier = user.identifier;
   let password = user.password;
-  const rows = await db.query(
-    `SELECT userId, identifier, name, surname, password
-    FROM users WHERE identifier = '${identifier}' `
+  //on vérifie d'abord que l'utilisateur fait bien partie de l'entreprise
+  const isSalariman = await db.query(
+    `SELECT identifier, name, surname
+    FROM officialusers WHERE identifier = '${identifier}' `
   );
-  //on vérifie d'abord que l'utilisateur n'existe pas
-  if(rows.length == 0){
-    const isAdminFromIdentifier = identifier.split('@')[1];
-    if(isAdminFromIdentifier == "groupomania.fr")
-    {
-      isAdmin = 'FALSE';
+  if(isSalariman.length !== 0 )
+  {
+    const rows = await db.query(
+      `SELECT userId, identifier, name, surname, password
+      FROM users WHERE identifier = '${identifier}' `
+    );
+    //on vérifie d'abord que l'utilisateur n'existe pas
+    if(rows.length == 0){
+      const isAdminFromIdentifier = identifier.split('@')[1];
+      if(isAdminFromIdentifier == "groupomania.fr")
+      {
+        isAdmin = 'FALSE';
+      }
+      else{
+        isAdmin = 'TRUE';
+      }
+      bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, function(err, hash) {
+          
+            const result = db.query(
+              `INSERT INTO users(identifier,name,surname,password,isAdmin)
+              VALUES
+              ('${identifier}', '${user.name}', '${user.surname}', '${hash}', ${isAdmin} );`
+            );
+          let message = 'Error in creating new user';
+
+          if (result.affectedRows) {
+            message = 'New user created successfully';
+          }
+      
+          return {message};
+        });
+      });
     }
     else{
-      isAdmin = 'TRUE';
+      let message = 'User already exists.';
+      return {message};
     }
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(password, salt, function(err, hash) {
-        
-          const result = db.query(
-            `INSERT INTO users(identifier,name,surname,password,isAdmin)
-            VALUES
-            ('${identifier}', '${user.name}', '${user.surname}', '${hash}', ${isAdmin} );`
-          );
-        let message = 'Error in creating new user';
-
-        if (result.affectedRows) {
-          message = 'New user created successfully';
-        }
-    
-        return {message};
-       });
-    });
   }
   else{
-    let message = 'User already exists.';
+    let message = 'Not part of the company.';
     return {message};
   }
 }
