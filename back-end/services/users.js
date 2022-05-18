@@ -506,7 +506,6 @@ async function dislikePost(userId,postId,post){
       return {message};
     }
     else{
-      console.log(dislikeAlready);
       if(dislikeAlready[0].dislikesNb == "0")
       {
         const result = await db.query(
@@ -547,6 +546,25 @@ async function getAllLikes(userId,postId,post){
   }
 }
 
+async function getAllDislikes(userId,postId,post){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}';`
+  );
+  if(userExist.length !== 0){
+    const rows = await db.query(
+      `SELECT likeId
+      FROM likes WHERE postId = '${postId}' AND dislikesNb = '1';`
+    );
+    let total_dislikes = rows.length;
+    return total_dislikes;
+  }
+  else{
+    let message = "No authorization"
+    return message;
+  }
+}
+
 
 
 module.exports = {
@@ -567,5 +585,6 @@ module.exports = {
   getAllComments,
   likePost,
   dislikePost,
-  getAllLikes
+  getAllLikes,
+  getAllDislikes
 }
