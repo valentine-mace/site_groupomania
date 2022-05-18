@@ -84,6 +84,26 @@ async function initializeWebsite(){
     `SELECT * FROM posts
     NATURAL JOIN comments;`
   );
+
+  const createLikes = await db.query(
+    `CREATE TABLE likes
+    (
+      likeId int(11) NOT NULL AUTO_INCREMENT,
+      likesNb int(11),
+      dislikesNb int(11),
+      postId int(11),
+      userId int(11),
+      PRIMARY KEY (likeId),
+      FOREIGN KEY (postId)
+      REFERENCES  posts (postId)
+      ON DELETE CASCADE
+    );`
+  );
+
+  const bindTablesPostsLikes = await db.query(
+    `SELECT * FROM posts
+    NATURAL JOIN likes ;`
+  );
 }
 
 //fonction pour récupérer tous les utilisateurs
