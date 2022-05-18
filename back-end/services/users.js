@@ -83,8 +83,16 @@ async function initializeWebsite(){
 //fonction pour récupérer tous les utilisateurs
 async function getUsers(){
   const rows = await db.query(
-    `SELECT id, identifier, name, surname, password
+    `SELECT userId, identifier, name, surname, password
     FROM users`
+  );
+  return rows;
+}
+
+async function getUser(userId){
+  const rows = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}';`
   );
   return rows;
 }
@@ -173,9 +181,9 @@ async function findUser(user){
 }
 
 //fonction pour supprimer un compte
-async function deleteUser(id){
+async function deleteUser(userId){
   const result = await db.query(
-    `DELETE FROM users WHERE userId=${id}`
+    `DELETE FROM users WHERE userId=${userId}`
   );
 
   let message = 'Error in deleting user';
@@ -188,13 +196,13 @@ async function deleteUser(id){
 }
 
 //fonction pour mettre à jour les informations d'un utiliusateur
-async function updateUser(id, user){
+async function updateUser(userId, user){
     let password = user.password;
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
         const result = db.query(
           `UPDATE users SET name="${user.name}", surname="${user.surname}", password="${hash}"
-          WHERE userId=${id};` 
+          WHERE userId=${userId};` 
         );
         
         let message = 'Error in updating new user';
@@ -209,8 +217,7 @@ async function updateUser(id, user){
 }
 
 //fonction pour créer un post
-async function createPost(id,post){
-  userId = id;
+async function createPost(userId,post){
   date = new Date();
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +
@@ -237,14 +244,14 @@ async function createPost(id,post){
 }
 
 //fonction pour supprimer post
-async function deletePost(userId,id,post){
+async function deletePost(userId,postId,post){
   const rows = await db.query(
     `SELECT userId
-    FROM posts WHERE id = '${id}' `
+    FROM posts WHERE postId = '${postId}' `
   );
   if(rows[0].userId == userId){
     const result = await db.query(
-    `DELETE FROM posts WHERE id=${id}`
+    `DELETE FROM posts WHERE postId=${postId}`
     );
 
     let message = 'Error in deleting post';
@@ -264,15 +271,15 @@ async function deletePost(userId,id,post){
 }
 
 //récupérer un post
-async function getPost(userId,id,post){
+async function getPost(userId,postId,post){
   const userExist = await db.query(
     `SELECT userId, identifier, name, surname, password
     FROM users WHERE userId = '${userId}' `
   );
   if(userExist.length !== 0){
     const rows = await db.query(
-      `SELECT id, title, content, image, date, userId
-      FROM posts WHERE id = '${id}' `
+      `SELECT postId, title, content, image, date, userId
+      FROM posts WHERE postId = '${postId}' `
     );
     return rows;
   }
@@ -291,7 +298,7 @@ async function getAllPosts(userId){
   );
   if(userExist.length !== 0){
     const rows = await db.query(
-      `SELECT id, title, content, image, date,userId
+      `SELECT postId, title, content, image, date,userId
       FROM posts`
     );
     return rows;
@@ -304,7 +311,7 @@ async function getAllPosts(userId){
 }
 
 //fonction pour supprimer post
-async function updatePost(userId,id,post){
+async function updatePost(userId,postId,post){
   date = new Date();
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +
@@ -315,12 +322,12 @@ async function updatePost(userId,id,post){
     ('00' + date.getUTCSeconds()).slice(-2);
     const rows = await db.query(
       `SELECT userId
-      FROM posts WHERE id = '${id}' `
+      FROM posts WHERE postId = '${postId}' `
     );
     if(rows[0].userId == userId){
       const result = await db.query(
       `UPDATE posts SET title="${post.title}", content="${post.content}", image="${post.image}", date="${date}"
-      WHERE id=${id};` 
+      WHERE postId=${postId};` 
       );
 
       let message = 'Error in updating post';
@@ -382,10 +389,29 @@ async function deleteComment(userId,postId,commentId,post){
 
 }
 
+async function getAllComments(userId,postId,post){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}';`
+  );
+  if(userExist.length !== 0){
+    const rows = await db.query(
+      `SELECT commentId ,content, date,userId
+      FROM comments WHERE postId = '${postId}';`
+    );
+    return rows;
+  }
+  else{
+    let message = "No authorization"
+    return message;
+  }
+}
+
 
 module.exports = {
   initializeWebsite,
   getUsers,
+  getUser,
   createUser,
   deleteUser,
   findUser,
@@ -396,5 +422,6 @@ module.exports = {
   getPost,
   updatePost,
   createComment,
-  deleteComment
+  deleteComment,
+  getAllComments
 }
