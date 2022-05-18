@@ -21,19 +21,22 @@ async function createUser(user){
   );
   //on vérifie d'abord que l'utilisateur n'existe pas
   if(rows.length == 0){
+    const isAdminFromIdentifier = identifier.split('@')[1];
+    if(isAdminFromIdentifier == "groupomania.fr")
+    {
+      isAdmin = 'FALSE';
+    }
+    else{
+      isAdmin = 'TRUE';
+    }
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(password, salt, function(err, hash) {
-        const result = db.query(
-          `INSERT INTO users(identifier,name,surname,password,isAdmin)
-          VALUES
-          ('${identifier}', '${user.name}', '${user.surname}', '${hash}', FALSE);`
-        );
-        //on check que dans l'identifiant, l'utilisateur est un admin
-        //si c'est le cas on update la donnée "isAdmin"
-        const isAdmin = db.query(
-          `UPDATE users SET isAdmin = TRUE WHERE identifier LIKE "%@groupomania.admin"`
-        );
-
+        
+          const result = db.query(
+            `INSERT INTO users(identifier,name,surname,password,isAdmin)
+            VALUES
+            ('${identifier}', '${user.name}', '${user.surname}', '${hash}', ${isAdmin} );`
+          );
         let message = 'Error in creating new user';
 
         if (result.affectedRows) {
@@ -191,17 +194,17 @@ async function getPost(userId,id,post){
 }
 
 //récupérer tous les posts
-async function getAllPosts(){
+async function getAllPosts(userId){
   const userExist = await db.query(
     `SELECT userId, identifier, name, surname, password
-    FROM users WHERE userId = '${userId}' `
+    FROM users WHERE userId = '${userId}';`
   );
   if(userExist.length !== 0){
-  const rows = await db.query(
-    `SELECT id, title, content, image, date,userId
-    FROM posts`
-  );
-  return rows;
+    const rows = await db.query(
+      `SELECT id, title, content, image, date,userId
+      FROM posts`
+    );
+    return rows;
   }
   else{
     let message = "No authorization"
