@@ -439,18 +439,29 @@ async function likePost(userId,postId,post){
     FROM users WHERE userId = '${userId}' `
   );
   if(rows[0].userId == userId){
-    const result = await db.query(
-    `UPDATE posts SET likesNb= likesNb +1
-    WHERE postId=${postId};` 
+    const likeAlready = await db.query(
+      `SELECT likeId
+      FROM likes WHERE userId = '${userId}' AND postId = '${postId}';`
     );
+    if(likeAlready.length == 0)
+    {
+      const result = await db.query(
+        `INSERT INTO likes(likesNb,dislikesNb,userId, postId)
+        VALUES
+        ('1','0','${userId}','${postId}');`
+      );
 
-    let message = 'Error in updating post';
+      let message = 'Error in updating post';
 
-    if (result.affectedRows) {
-      message = 'Post liked successfully';
+      if (result.affectedRows) {
+        message = 'Post liked successfully';
+      }
+      return {message};
     }
-
-    return {message};
+    else{
+      let message = 'Already liked.';
+      return {message};
+    }
 
   }
   else{
@@ -466,18 +477,29 @@ async function dislikePost(userId,postId,post){
     FROM users WHERE userId = '${userId}' `
   );
   if(rows[0].userId == userId){
-    const result = await db.query(
-    `UPDATE posts SET dislikesNb= dislikesNb +1
-    WHERE postId=${postId};` 
+    const likeAlready = await db.query(
+      `SELECT likeId
+      FROM likes WHERE userId = '${userId}' AND postId = '${postId}';`
     );
+    if(likeAlready.length == 0)
+    {
+      const result = await db.query(
+        `INSERT INTO likes(likesNb,dislikesNb,userId, postId)
+        VALUES
+        ('0','1','${userId}','${postId}');`
+      );
 
-    let message = 'Error in disliking post';
+      let message = 'Error in updating post';
 
-    if (result.affectedRows) {
-      message = 'Post disliked successfully';
+      if (result.affectedRows) {
+        message = 'Post liked successfully';
+      }
+      return {message};
     }
-
-    return {message};
+    else{
+      let message = 'Already liked.';
+      return {message};
+    }
 
   }
   else{

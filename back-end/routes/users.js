@@ -150,7 +150,7 @@ router.get('/:userId/post/:postId/comments', async function(req, res, next) {
   }
 });
 
-router.put('/:userId/post/:id/like', async function(req, res, next) {
+router.post('/:userId/post/:id/like', async function(req, res, next) {
   try {
     res.json(await users.likePost(req.params.userId, req.params.id, req.body));
   } catch (err) {
@@ -159,7 +159,7 @@ router.put('/:userId/post/:id/like', async function(req, res, next) {
   }
 });
 
-router.put('/:userId/post/:id/dislike', async function(req, res, next) {
+router.post('/:userId/post/:id/dislike', async function(req, res, next) {
   try {
     res.json(await users.dislikePost(req.params.userId, req.params.id, req.body));
   } catch (err) {
