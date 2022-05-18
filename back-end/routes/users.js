@@ -168,5 +168,23 @@ router.post('/:userId/post/:id/dislike', async function(req, res, next) {
   }
 });
 
+router.get('/:userId/post/:postId/like', async function(req, res, next) {
+  try {
+    res.json(await users.getAllLikes(req.params.userId, req.params.postId, req.query.page));
+  } catch (err) {
+    console.error(`Error while getting likes `, err.message);
+    next(err);
+  }
+});
+
+router.get('/:userId/post/:postId/dislike', async function(req, res, next) {
+  try {
+    res.json(await users.getAllDislikes(req.params.userId, req.params.postId, req.query.page));
+  } catch (err) {
+    console.error(`Error while getting dislikes `, err.message);
+    next(err);
+  }
+});
+
 
 module.exports = router;

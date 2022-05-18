@@ -422,7 +422,7 @@ async function getAllComments(userId,postId,post){
   );
   if(userExist.length !== 0){
     const rows = await db.query(
-      `SELECT commentId ,content, date,userId, likesNb, dislikesNb
+      `SELECT commentId ,content, date,userId
       FROM comments WHERE postId = '${postId}';`
     );
     return rows;
@@ -440,7 +440,7 @@ async function likePost(userId,postId,post){
   );
   if(rows[0].userId == userId){
     const likeAlready = await db.query(
-      `SELECT likeId
+      `SELECT likeId, likesNb, dislikesNb
       FROM likes WHERE userId = '${userId}' AND postId = '${postId}';`
     );
     if(likeAlready.length == 0)
@@ -459,8 +459,17 @@ async function likePost(userId,postId,post){
       return {message};
     }
     else{
-      let message = 'Already liked.';
-      return {message};
+      if(likeAlready[0].likesNb == "0")
+      {
+        const result = await db.query(
+        `UPDATE likes SET likesNb = "1", dislikesNb = "0"
+        WHERE userId = '${userId}' AND postId = '${postId}';`
+        ); 
+      }
+      else{
+        let message = 'Already liked.';
+        return {message};
+      }
     }
 
   }
@@ -477,11 +486,11 @@ async function dislikePost(userId,postId,post){
     FROM users WHERE userId = '${userId}' `
   );
   if(rows[0].userId == userId){
-    const likeAlready = await db.query(
-      `SELECT likeId
+    const dislikeAlready = await db.query(
+      `SELECT likeId, likesNb, dislikesNb
       FROM likes WHERE userId = '${userId}' AND postId = '${postId}';`
     );
-    if(likeAlready.length == 0)
+    if(dislikeAlready.length == 0)
     {
       const result = await db.query(
         `INSERT INTO likes(likesNb,dislikesNb,userId, postId)
@@ -489,16 +498,26 @@ async function dislikePost(userId,postId,post){
         ('0','1','${userId}','${postId}');`
       );
 
-      let message = 'Error in updating post';
+      let message = 'Error in disliking post';
 
       if (result.affectedRows) {
-        message = 'Post liked successfully';
+        message = 'Post disliked successfully';
       }
       return {message};
     }
     else{
-      let message = 'Already liked.';
-      return {message};
+      console.log(dislikeAlready);
+      if(dislikeAlready[0].dislikesNb == "0")
+      {
+        const result = await db.query(
+        `UPDATE likes SET likesNb = "0", dislikesNb = "1"
+        WHERE userId = '${userId}' AND postId = '${postId}';`
+        ); 
+      }
+      else{
+        let message = 'Already disliked.';
+        return {message};
+      }
     }
 
   }
@@ -508,6 +527,26 @@ async function dislikePost(userId,postId,post){
   }
 
 }
+
+async function getAllLikes(userId,postId,post){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}';`
+  );
+  if(userExist.length !== 0){
+    const rows = await db.query(
+      `SELECT likeId
+      FROM likes WHERE postId = '${postId}' AND likesNb = '1';`
+    );
+    let total_likes = rows.length;
+    return total_likes;
+  }
+  else{
+    let message = "No authorization"
+    return message;
+  }
+}
+
 
 
 module.exports = {
@@ -527,5 +566,6 @@ module.exports = {
   deleteComment,
   getAllComments,
   likePost,
-  dislikePost
+  dislikePost,
+  getAllLikes
 }
