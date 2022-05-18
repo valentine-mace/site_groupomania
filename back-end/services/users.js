@@ -356,6 +356,32 @@ async function createComment(userId,postId,comment){
   );
 }
 
+async function deleteComment(userId,postId,commentId,post){
+  const rows = await db.query(
+    `SELECT userId
+    FROM comments WHERE commentId = '${commentId}' `
+  );
+  if(rows[0].userId == userId){
+    const result = await db.query(
+    `DELETE FROM comments WHERE commentId=${commentId}`
+    );
+
+    let message = 'Error in deleting comment';
+
+    if (result.affectedRows) {
+      message = 'Comment deleted successfully';
+    }
+
+    return {message};
+
+  }
+  else{
+    let message = 'No authorization';
+    return {message};
+  }
+
+}
+
 
 module.exports = {
   initializeWebsite,
@@ -369,5 +395,6 @@ module.exports = {
   getAllPosts,
   getPost,
   updatePost,
-  createComment
+  createComment,
+  deleteComment
 }

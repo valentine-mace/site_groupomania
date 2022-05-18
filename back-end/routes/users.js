@@ -124,7 +124,7 @@ router.post('/:userId/post/:postId/comment', async function(req, res, next) {
 
 router.delete('/:userId/post/:postId/comment/:commentId', async function(req, res, next) {
   try {
-    res.json(await users.deletePost(req.params.userId, req.params.postId, req.params.commentId, req.query.page));
+    res.json(await users.deleteComment(req.params.userId, req.params.postId, req.params.commentId, req.query.page));
   } catch (err) {
     console.error(`Error while deleting comment `, err.message);
     next(err);
