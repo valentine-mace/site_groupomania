@@ -54,6 +54,12 @@ async function initializeWebsite(){
     );`
   );
 
+  const initializeLikes = await db.query(
+    `INSERT INTO posts(likesNb,dislikesNb,image)
+    VALUES
+    (0, 0, "");`
+  );
+
   const bindTables = await db.query(
     `SELECT * FROM users
     NATURAL JOIN posts;`
@@ -396,7 +402,7 @@ async function getAllComments(userId,postId,post){
   );
   if(userExist.length !== 0){
     const rows = await db.query(
-      `SELECT commentId ,content, date,userId
+      `SELECT commentId ,content, date,userId, likesNb, dislikesNb
       FROM comments WHERE postId = '${postId}';`
     );
     return rows;
@@ -405,6 +411,60 @@ async function getAllComments(userId,postId,post){
     let message = "No authorization"
     return message;
   }
+}
+
+async function likePost(userId,postId,post){
+  const rows = await db.query(
+    `SELECT userId
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(rows[0].userId == userId){
+    const result = await db.query(
+    `UPDATE posts SET likesNb= likesNb +1
+    WHERE postId=${postId};` 
+    );
+
+    let message = 'Error in updating post';
+
+    if (result.affectedRows) {
+      message = 'Post liked successfully';
+    }
+
+    return {message};
+
+  }
+  else{
+    let message = 'No authorization';
+    return {message};
+  }
+
+}
+
+async function dislikePost(userId,postId,post){
+  const rows = await db.query(
+    `SELECT userId
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(rows[0].userId == userId){
+    const result = await db.query(
+    `UPDATE posts SET dislikesNb= dislikesNb +1
+    WHERE postId=${postId};` 
+    );
+
+    let message = 'Error in disliking post';
+
+    if (result.affectedRows) {
+      message = 'Post disliked successfully';
+    }
+
+    return {message};
+
+  }
+  else{
+    let message = 'No authorization';
+    return {message};
+  }
+
 }
 
 
@@ -423,5 +483,7 @@ module.exports = {
   updatePost,
   createComment,
   deleteComment,
-  getAllComments
+  getAllComments,
+  likePost,
+  dislikePost
 }
