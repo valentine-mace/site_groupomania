@@ -585,6 +585,26 @@ async function getAllDislikes(userId,postId,post){
   }
 }
 
+async function getRecentPosts(userId){
+  const userExist = await db.query(
+    `SELECT userId, identifier, name, surname, password
+    FROM users WHERE userId = '${userId}';`
+  );
+  if(userExist.length !== 0){
+    const rows = await db.query(
+      `SELECT *
+      FROM posts ORDER BY date desc;`
+    );
+    return rows.slice(-3);
+  }
+  else
+  {
+    let message = "No authorization"
+    return message;
+  }
+
+}
+
 
 
 
@@ -608,5 +628,6 @@ module.exports = {
   likePost,
   dislikePost,
   getAllLikes,
-  getAllDislikes
+  getAllDislikes,
+  getRecentPosts
 }

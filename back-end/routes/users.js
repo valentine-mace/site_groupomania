@@ -186,5 +186,14 @@ router.get('/:userId/post/:postId/dislike', async function(req, res, next) {
   }
 });
 
+router.get('/:userId/recentPosts', async function(req, res, next) {
+  try {
+    res.json(await users.getRecentPosts(req.params.userId,req.query.page));
+  } catch (err) {
+    console.error(`Error while getting recent posts `, err.message);
+    next(err);
+  }
+});
+
 
 module.exports = router;
