@@ -480,9 +480,12 @@ async function likePost(userId,postId,post){
         WHERE userId = '${userId}' AND postId = '${postId}';`
         ); 
       }
-      else{
-        let message = 'Already liked.';
-        return {message};
+      else if(likeAlready[0].likesNb == "1")
+      {
+        const result = await db.query(
+          `DELETE FROM likes
+          WHERE userId = '${userId}' AND postId = '${postId}';`
+          ); 
       }
     }
 
@@ -527,9 +530,12 @@ async function dislikePost(userId,postId,post){
         WHERE userId = '${userId}' AND postId = '${postId}';`
         ); 
       }
-      else{
-        let message = 'Already disliked.';
-        return {message};
+      else if(dislikeAlready[0].dislikesNb == "1")
+      {
+        const result = await db.query(
+          `DELETE FROM likes
+          WHERE userId = '${userId}' AND postId = '${postId}';`
+          ); 
       }
     }
 
@@ -578,6 +584,8 @@ async function getAllDislikes(userId,postId,post){
     return message;
   }
 }
+
+
 
 
 
