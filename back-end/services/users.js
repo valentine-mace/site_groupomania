@@ -245,6 +245,7 @@ async function updateUser(userId, user){
 //fonction pour créer un post
 async function createPost(userId,post){
   date = new Date();
+  //`${req.protocol}://${req.get('host')}/images/${post.filename}`;
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +
     ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
@@ -253,12 +254,17 @@ async function createPost(userId,post){
     ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
     ('00' + date.getUTCSeconds()).slice(-2);
   // 'LOAD_FILE(${post.image})',
+  image_path = "C:\Users\Valentine Macé\Desktop";
   const result = db.query(
-    `INSERT INTO posts(title,content,date,image,userId)
+    `INSERT INTO posts(title,content,date, image,userId)
     VALUES
-    ('${post.title}', '${post.content}','${date}','${post.image}','${userId}');`
+    ('${post.title}', '${post.content}','${date}', '${post.image}','${userId}');`
   );
-
+  // const insertImage = db.query(
+  // `INSERT INTO posts(image) 
+  // SELECT BulkColumn 
+  // FROM Openrowset( Bulk ${image_path}, Single_Blob) as img;`
+  // );
 
   // let message = 'Error in creating new post';
 
