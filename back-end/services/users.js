@@ -281,7 +281,11 @@ async function deletePost(userId,postId,post){
     `SELECT userId
     FROM posts WHERE postId = '${postId}' `
   );
-  if(rows[0].userId == userId){
+  const isAdmin = await db.query(
+    `SELECT isAdmin
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(rows[0].userId == userId || isAdmin[0].isAdmin == 1){
     const result = await db.query(
     `DELETE FROM posts WHERE postId=${postId}`
     );
@@ -400,7 +404,11 @@ async function deleteComment(userId,postId,commentId,post){
     `SELECT userId
     FROM comments WHERE commentId = '${commentId}' `
   );
-  if(rows[0].userId == userId){
+  const isAdmin = await db.query(
+    `SELECT isAdmin
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(rows[0].userId == userId || isAdmin[0].isAdmin == 1){
     const result = await db.query(
     `DELETE FROM comments WHERE commentId=${commentId}`
     );
