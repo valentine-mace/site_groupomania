@@ -187,21 +187,25 @@ async function findUser(user){
     FROM users WHERE identifier = '${identifier}' `
   );
   if(rows.length == 0){
-    console.log("User doesn't exist");
+    console.log("cacaaa");
+    return 0;
   }
   else{
     const correct_password = await db.query(
       `SELECT password
       FROM users WHERE identifier = '${identifier}'`
     );
-    bcrypt.compare(password, correct_password[0].password, function(err, result) {
-      if (result) {
-        console.log("It matches!")
-      }
-      else {
-        console.log("Invalid password!");
-      }
-    });
+    return 1;
+    //PROB ICI
+    // bcrypt.compare(password, correct_password[0].password, function(err, result) {
+    //   if (result) {
+    //     return 2;
+    //   }
+    //   else {
+    //     console.log("testttt");
+    //     return 1;
+    //   }
+    // });
   }
 
 }

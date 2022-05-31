@@ -1,17 +1,40 @@
 import React, {useState} from "react";
 import Header from "../components/Header";
 import { NavLink } from "react-router-dom";
+import DataService from "../services.js";
 
 const ConnexionPage = () => {
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  //const [loggedIn, setLoggedIn] = useState([]);
 
   const handleSubmit = (event) => {
-    // Prevent page reload
+
     event.preventDefault();
 
     var { identifier, pass } = document.forms[0];
-    console.log(identifier.value, pass.value);
+
+    let userToFind = {
+      identifier : identifier.value,
+      password : pass.value
+    }
+    
+    const findUser = async () => {
+      const user = await DataService.findUser(userToFind);
+      const isLogged = user.data;
+      console.log(user);
+      if(isLogged === 0){
+        alert("L'identifiant n'existe pas.");
+      }
+      else if(isLogged === 2){
+        alert("Mot de passe incorrect");
+      }
+      else if(isLogged === 1){
+        console.log("OK");
+      }
+    }
+    findUser();
+
   };
 
   return (
