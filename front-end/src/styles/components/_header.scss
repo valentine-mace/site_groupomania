@@ -1,42 +1,40 @@
 .header {
-  h1 {
-    font-size: 3.3rem;
-    text-shadow: 2px 3px 0px $color-1;
-    text-align: center;
-    letter-spacing: 2px;
+  background-color: white;
+  img{
+    width: 240px;
+    height: 100px;
+    margin-left: 5%;
+    margin-top: 2%;
   }
   nav {
     position: absolute;
-    top: 16px;
-    left: 16px;
-    font-size: 1.3rem;
+    top: 5%;
+    left: 90%;
+    font-size: 2rem;
 
     ul {
       display: flex;
 
       a {
         text-decoration: none;
-        color: $white;
-        border-radius: 10px;
         width: 102px;
         text-align: center;
-        margin-right: 5px;
-
-        &:visited {
-          text-decoration: none;
-          color: $white;
-        }
+        color: #FD2D01;
         &:hover {
-          background: $black;
+          font-weight: 900;
+          border-bottom: 5px solid #FD2D01;
         }
       }
-      a.nav-active {
-        background: $color-1;
 
-        &:hover {
-          background: $black;
-        }
-      }
     }
   }
+
 }
+
+  // h1 {
+  //   font-size: 23rem;
+  //   text-shadow: 2px 3px 0px $rouge;
+  //   text-align: center;
+  //   letter-spacing: 2px;
+  // }
+  

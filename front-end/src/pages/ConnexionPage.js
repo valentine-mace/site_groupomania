@@ -1,11 +1,13 @@
 import React from "react";
+import Header from "../components/Header";
 
-function ConnexionPage() {
+const ConnexionPage = () => {
   return (
-    <div>
+    <div className="connexion-page">
+      <Header/>
       <h1>Connexion</h1>
     </div>
   );
 }
 
-export default App;
+export default ConnexionPage;
