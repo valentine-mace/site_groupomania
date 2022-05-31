@@ -6,14 +6,22 @@ const ConnexionPage = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const handleSubmit = (event) => {
+    // Prevent page reload
+    event.preventDefault();
+
+    var { identifier, pass } = document.forms[0];
+    console.log(identifier.value, pass.value);
+  };
+
   return (
    <div>
      <Header/>
      <h1>Connexion</h1>
-     <form>
+     <form onSubmit={handleSubmit}>
        <div>
          <label>Identifiant </label>
-         <input type="text" name="uname" required />
+         <input type="text" name="identifier" required />
        </div>
        <div >
          <label>Mot de passe </label>
