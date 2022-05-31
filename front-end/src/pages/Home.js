@@ -15,12 +15,12 @@ const Home = () => {
     fetchUsers();
 
   }, []);
-  console.log(users);
 
   return (
     <div>
       <Header/>
       <h1>Home</h1>
+      {users.map((user) => <h2>{user.name}</h2>)}
     </div>
   );
 }
