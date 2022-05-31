@@ -1,27 +1,51 @@
 import React, {useState, useEffect} from "react";
 import Header from "../components/Header";
-// import Post from "../components/Posts";
 import DataService from "../services.js";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
 
-    const fetchUsers = async () => {
-      const allUsers = await DataService.getAllUsers();
-      setUsers(allUsers.data);
+    const fetchPosts = async () => {
+      const allPosts = await DataService.getAllPosts(2);
+      setPosts(allPosts.data);
     }
-    fetchUsers();
+    fetchPosts();
 
   }, []);
+
+  function sqlToJsDate(sqlDate){
+
+    let final_date= sqlDate.substr(0,sqlDate.length-14);
+
+    return final_date;
+  }
 
   return (
     <div>
       <Header/>
       <h1>Home</h1>
-      {users.map((user) => <h2>{user.name}</h2>)}
+      <button>+ Nouveau Post</button>
+      <div className="home">
+        {posts.map((post) =>
+          <NavLink
+          to={{
+            pathname:"/post/"+ post.postId,   
+          }}>
+            <div className="card">
+              <h1>{post.title}</h1>
+              <h4>Posté le: {sqlToJsDate(post.date)} </h4>
+              <p>{post.content}</p>
+            </div>
+          </NavLink>
+   
+        )}
+      </div>
     </div>
+
   );
 }
 

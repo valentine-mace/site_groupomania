@@ -159,7 +159,7 @@ router.post('/:userId/post/:id/like', async function(req, res, next) {
   }
 });
 
-router.post('/:userId/post/:id/dislike', async function(req, res, next) {
+router.post('/:userId/post/:id/dislikes', async function(req, res, next) {
   try {
     res.json(await users.dislikePost(req.params.userId, req.params.id, req.body));
   } catch (err) {
@@ -168,7 +168,7 @@ router.post('/:userId/post/:id/dislike', async function(req, res, next) {
   }
 });
 
-router.get('/:userId/post/:postId/like', async function(req, res, next) {
+router.get('/:userId/post/:postId/likes', async function(req, res, next) {
   try {
     res.json(await users.getAllLikes(req.params.userId, req.params.postId, req.query.page));
   } catch (err) {
@@ -177,7 +177,7 @@ router.get('/:userId/post/:postId/like', async function(req, res, next) {
   }
 });
 
-router.get('/:userId/post/:postId/dislike', async function(req, res, next) {
+router.get('/:userId/post/:postId/dislikes', async function(req, res, next) {
   try {
     res.json(await users.getAllDislikes(req.params.userId, req.params.postId, req.query.page));
   } catch (err) {

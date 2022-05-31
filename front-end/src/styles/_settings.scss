@@ -1,3 +1,4 @@
+
 @font-face {
   font-family: "font-1";
   src: url(../assets/fonts/Dongle-Regular.ttf);
@@ -14,6 +15,7 @@ $rouge: #FD2D01;
 $rose: #FFD7D7;
 $gris: #4E5166;
 $black: #060d2c;
+$rose-clair: #FBEDF4;
 $white: rgb(238, 238, 238);
 
 * {
@@ -21,13 +23,11 @@ $white: rgb(238, 238, 238);
   padding: 0;
   box-sizing: border-box;
   font-family: $font-2;
+  background : $rose-clair;
+  text-decoration: none;
 }
 
 li {
   list-style: none;
 }
-.result {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+

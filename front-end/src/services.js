@@ -5,9 +5,31 @@ class DataService {
     return await(http.get("/users"));
   }
 
-  // async getAllPosts(userId) {
-  //   return await(http.get(`/users/${userId}/posts`));
-  // }
+  async getAllPosts(userId) {
+    return await(http.get(`/users/${userId}/posts`));
+  }
+
+  async getPost(userId, postId) {
+    return await(http.get(`/users/${userId}/post/${postId}`));
+  }
+
+  async getAllLikes(userId, postId) {
+    return await(http.get(`/users/${userId}/post/${postId}/likes`));
+  }
+
+  async getAllDislikes(userId, postId) {
+    return await(http.get(`/users/${userId}/post/${postId}/dislikes`));
+  }
+
+  async getAllComments(userId, postId) {
+    return await(http.get(`/users/${userId}/post/${postId}/comments`));
+  }
+
+  async deletePost(userId,postId) {
+    return await (http.delete(`/users/${userId}/post/${postId}`));
+  }
+
+  
 
   // get(id) {
   //   return http.get(`/tutorials/${id}`);
