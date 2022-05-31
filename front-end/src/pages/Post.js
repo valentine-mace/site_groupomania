@@ -49,12 +49,13 @@ const Post = () => {
     return final_date;
   }
 
-  async function deletePost(){
+  //to complete - delete function
+  // async function deletePost(){
     
-    const deletePost = await DataService.deletePost(2,postId.id);
-    return deletePost;
+  //   const deletePost = await DataService.deletePost(2,postId.id);
+  //   return deletePost;
 
-  }
+  // }
 
   return (
     <div>
@@ -75,7 +76,7 @@ const Post = () => {
             )}
             {post.userId === userId &&
             <div>
-              <button onClick={() => deletePost()}>Supprimer</button>
+              {/* <button onClick={() => deletePost()}>Supprimer</button> */}
               <button>Modifier</button>
             </div>
             }
