@@ -1,3 +1,37 @@
 .connexion-page {
-  background-color: $rouge;
+  .header{
+    background: white;
+    img{
+      width: 240px;
+      height: 100px;
+      margin-left: 35%;
+      margin-top: 2%;
+    }
+  };
+  form{
+    text-align: center;
+    .ident-field{
+      margin-bottom: 2%;
+      input{
+      }
+    }
+    .pass-field{
+      margin-bottom: 2%;
+      input{
+      }
+    }
+    .button{
+      margin-top: 3%;
+      button{
+        padding-top:1%;
+        padding-bottom:1%;
+        padding-left:3%;
+        padding-right:3%;
+      }
+    }
+  }
+  .inscription{
+    margin-top: 2%;
+    text-align: center;
+  }
 }

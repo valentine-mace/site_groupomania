@@ -123,6 +123,15 @@ async function getUser(userId){
   return rows;
 }
 
+async function getUserId(identifier){
+  const rows = await db.query(
+    `SELECT userId
+    FROM users WHERE identifier = '${identifier}';`
+  );
+  console.log(rows);
+  return rows;
+}
+
 //fonction pour créer un utilisateur - inscription
 async function createUser(user){
   let identifier = user.identifier;
@@ -177,8 +186,14 @@ async function createUser(user){
   }
 }
 
+//PROB ICIIIIII
+// async function isLogged(password,correct_password){
+//   await 
+// }
+
 //fonction pour trouver un utilisateur - connexion
 async function findUser(user){
+  console.log("bon endroit");
   let identifier = user.identifier;
   let password = user.password;
   //d'abord on vérifie que l'utilisateur existe
@@ -187,7 +202,6 @@ async function findUser(user){
     FROM users WHERE identifier = '${identifier}' `
   );
   if(rows.length == 0){
-    console.log("cacaaa");
     return 0;
   }
   else{
@@ -195,17 +209,20 @@ async function findUser(user){
       `SELECT password
       FROM users WHERE identifier = '${identifier}'`
     );
-    return 1;
-    //PROB ICI
-    // bcrypt.compare(password, correct_password[0].password, function(err, result) {
-    //   if (result) {
-    //     return 2;
-    //   }
-    //   else {
-    //     console.log("testttt");
-    //     return 1;
-    //   }
-    // });
+    let isOk = bcrypt.compare(password, correct_password[0].password);
+    isOk.then(function(validPass){
+      return validPass;
+    });
+    // let test = isOk;
+    // console.log("jpp", test);
+    // if(isOk){
+    //   console.log("match");
+    //   return 2;
+    // }else{
+    //   console.log("wrong");
+    //   return 1;
+    // }
+
   }
 
 }
@@ -633,5 +650,6 @@ module.exports = {
   dislikePost,
   getAllLikes,
   getAllDislikes,
-  getRecentPosts
+  getRecentPosts,
+  getUserId
 }

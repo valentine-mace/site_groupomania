@@ -32,6 +32,15 @@ router.get('/:userId', async function(req, res, next) {
   }
 });
 
+router.get('/:identifier/user', async function(req, res, next) {
+  try {
+    res.json(await users.getUserId(req.params.identifier,req.query.page));
+  } catch (err) {
+    console.error(`Error while getting user `, err.message);
+    next(err);
+  }
+});
+
 //créer un compte utilisateur
 router.post('/signup', async function(req, res, next) {
   try {

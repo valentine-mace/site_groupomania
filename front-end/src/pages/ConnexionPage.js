@@ -6,7 +6,7 @@ import DataService from "../services.js";
 const ConnexionPage = () => {
 
   
-  //const [loggedIn, setLoggedIn] = useState([]);
+  const [userIds, setUserIds] = useState([]);
 
   const handleSubmit = (event) => {
 
@@ -21,45 +21,61 @@ const ConnexionPage = () => {
     
     const findUser = async () => {
       const user = await DataService.findUser(userToFind);
-      const isLogged = user.data;
       console.log(user);
-      if(isLogged === 0){
-        alert("L'identifiant n'existe pas.");
-      }
-      else if(isLogged === 2){
-        alert("Mot de passe incorrect");
-      }
-      else if(isLogged === 1){
-        console.log("OK");
-      }
+      const isLogged = user.data;
+      // if(isLogged === 0){
+      //   alert("L'identifiant n'existe pas.");
+      // }
+      // else if(isLogged === 2){
+      //   alert("Mot de passe incorrect");
+      // }
+      // else if(isLogged === 1){
+      //   console.log("OK");
+      // }
     }
     findUser();
+
+    // const getIdUser = async () => {
+    //   const findUserId = await DataService.getUserId(identifier.value);
+    //   setUserIds(findUserId.data[0].userId);
+    //   console.log(userIds);
+    // }
+    // getIdUser();
+
 
   };
 
   return (
-   <div>
+   <div className="connexion-page">
      <Header/>
      <h1>Connexion</h1>
      <form onSubmit={handleSubmit}>
-       <div>
+       <div className="ident-field">
          <label>Identifiant </label>
          <input type="text" name="identifier" required />
        </div>
-       <div >
+       <div className="pass-field" >
          <label>Mot de passe </label>
          <input type="password" name="pass" required />
        </div>
-       <div>
+       <div className="button">
          <input type="submit" />
+       <NavLink
+            to={{
+              pathname:"/home/"  
+            }}>
+         <button>Connexion</button>
+         </NavLink>
        </div>
      </form>
-     <p>Pas encore de compte?</p>
-     <NavLink
-          to={{
-            pathname:"/signup/"   
-          }}>
-     <button>Inscrivez-vous!</button></NavLink>
+     <div className="inscription">
+      <p>Pas encore de compte?</p>
+      <NavLink
+            to={{
+              pathname:"/signup/"   
+            }}>
+      <button>Inscrivez-vous!</button></NavLink>
+     </div>
    </div>
   );
 }
