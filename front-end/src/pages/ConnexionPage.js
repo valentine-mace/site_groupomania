@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import Header from "../components/Header";
 import { NavLink } from "react-router-dom";
 import DataService from "../services.js";
 import { useNavigate } from "react-router-dom";
+
 
 const ConnexionPage = () => {
 
@@ -24,19 +25,20 @@ const ConnexionPage = () => {
       password : pass.value
     }
 
-    const user = findUser(credentials);
+    const user = await findUser(credentials);
     //const isLogged = user.data;
-    const isLogged = true;
+    //const isLogged = false;
     const userId = 1;
     console.log(user);
+    console.log(user.data);
     //prob ici ptnnnn
 
-    if(!isLogged){
-      alert("Votre identifiant ou mot de passe est incorrect.");
-    }
-    else{
-      navigate("/home/" + userId, { replace: true });
-    }
+    // if(!isLogged){
+    //   alert("Votre identifiant ou mot de passe est incorrect.");
+    // }
+    // else{
+    //   navigate("/home/" + userId, { replace: true });
+    // }
 
 
     

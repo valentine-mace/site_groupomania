@@ -1,9 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./icon-left-font.png";
+import { useParams} from "react-router-dom"
 
 
 const Header = () => {
+  const current_pathname = window.location.pathname;
+  const userId = useParams();
   return (
     <div className="header">
       <NavLink to= {"/home"}>
@@ -12,7 +15,7 @@ const Header = () => {
       <img src={logo} alt="Logo Groupomania"></img>
       {/* <nav>
         <ul>
-          <NavLink to={"/profil"}><li>Mon profil</li></NavLink>
+          <NavLink to={current_pathname + "/profil" + userId}><li>Mon profil</li></NavLink>
         </ul>
       </nav> */}
     </div>
