@@ -5,8 +5,7 @@ import DataService from "../services.js";
 
 const ConnexionPage = () => {
 
-  
-  const [userIds, setUserIds] = useState([]);
+  const [userId, setUserId] = useState(undefined);
 
   const handleSubmit = (event) => {
 
@@ -35,12 +34,15 @@ const ConnexionPage = () => {
     }
     findUser();
 
-    // const getIdUser = async () => {
-    //   const findUserId = await DataService.getUserId(identifier.value);
-    //   setUserIds(findUserId.data[0].userId);
-    //   console.log(userIds);
-    // }
-    // getIdUser();
+    const getIdUser = async () => {
+      const findUserId = await DataService.getUserId(identifier.value);
+      const realUserId = findUserId.data[0].userId;
+      console.log("test",realUserId);
+      setUserId(realUserId);
+
+    }
+    getIdUser();
+    console.log({userId});
 
 
   };

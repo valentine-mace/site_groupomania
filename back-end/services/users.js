@@ -187,9 +187,9 @@ async function createUser(user){
 }
 
 //PROB ICIIIIII
-// async function isLogged(password,correct_password){
-//   await 
-// }
+async function isLogged(password,correct_password){
+ return await bcrypt.compare(password, correct_password[0].password);
+}
 
 //fonction pour trouver un utilisateur - connexion
 async function findUser(user){
@@ -209,10 +209,12 @@ async function findUser(user){
       `SELECT password
       FROM users WHERE identifier = '${identifier}'`
     );
-    let isOk = bcrypt.compare(password, correct_password[0].password);
-    isOk.then(function(validPass){
-      return validPass;
-    });
+    let isOk = await isLogged(password,correct_password);
+    console.log("chouuu",isOk);
+    // let isOk = bcrypt.compare(password, correct_password[0].password);
+    // isOk.then(function(validPass){
+    //   return validPass;
+    // });
     // let test = isOk;
     // console.log("jpp", test);
     // if(isOk){

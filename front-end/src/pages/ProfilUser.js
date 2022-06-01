@@ -8,7 +8,7 @@ const ProfilUser = () => {
 
   useEffect(() => {
 
-    const userId = 2;
+    const userId = 1;
 
     const fetchUser = async () => {
       const getUser = await DataService.getUser(userId);
@@ -24,10 +24,11 @@ const ProfilUser = () => {
       <Header/>
       <h1>Profil</h1>
       {users.map((user) =>
-        <div className="card">
-          <h1>{user.identifier}</h1>
-          <h1>{user.name}</h1>
-          <h1>{user.surname}</h1>
+        <div>
+          <h1>Identifiant: {user.identifier}</h1>
+          <h1>Prénom: {user.name}</h1>
+          <h1>Nom de famille: {user.surname}</h1>
+          <h1>Mot de passe: *****</h1>
         </div>
         )}
     </div>
