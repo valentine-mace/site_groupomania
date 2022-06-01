@@ -2,49 +2,44 @@ import React, {useState} from "react";
 import Header from "../components/Header";
 import { NavLink } from "react-router-dom";
 import DataService from "../services.js";
+import { useNavigate } from "react-router-dom";
 
 const ConnexionPage = () => {
 
-  const [userId, setUserId] = useState(undefined);
+  let navigate = useNavigate();
 
-  const handleSubmit = (event) => {
 
+  const findUser = async (credentials) => {
+    return await DataService.findUser(credentials);
+  }
+
+
+  async function handleSubmit(event){
     event.preventDefault();
 
-    var { identifier, pass } = document.forms[0];
+    const { identifier, pass } = document.forms[0];
 
-    let userToFind = {
+    const credentials = {
       identifier : identifier.value,
       password : pass.value
     }
+
+    const user = findUser(credentials);
+    //const isLogged = user.data;
+    const isLogged = true;
+    const userId = 1;
+    console.log(user);
+    //prob ici ptnnnn
+
+    if(!isLogged){
+      alert("Votre identifiant ou mot de passe est incorrect.");
+    }
+    else{
+      navigate("/home/" + userId, { replace: true });
+    }
+
+
     
-    const findUser = async () => {
-      const user = await DataService.findUser(userToFind);
-      console.log(user);
-      const isLogged = user.data;
-      // if(isLogged === 0){
-      //   alert("L'identifiant n'existe pas.");
-      // }
-      // else if(isLogged === 2){
-      //   alert("Mot de passe incorrect");
-      // }
-      // else if(isLogged === 1){
-      //   console.log("OK");
-      // }
-    }
-    findUser();
-
-    const getIdUser = async () => {
-      const findUserId = await DataService.getUserId(identifier.value);
-      const realUserId = findUserId.data[0].userId;
-      console.log("test",realUserId);
-      setUserId(realUserId);
-
-    }
-    getIdUser();
-    console.log({userId});
-
-
   };
 
   return (
@@ -62,12 +57,6 @@ const ConnexionPage = () => {
        </div>
        <div className="button">
          <input type="submit" />
-       <NavLink
-            to={{
-              pathname:"/home/"  
-            }}>
-         <button>Connexion</button>
-         </NavLink>
        </div>
      </form>
      <div className="inscription">

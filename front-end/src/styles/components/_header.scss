@@ -1,10 +1,10 @@
 .header {
   background-color: white;
   img{
-    width: 240px;
+    width: 340px;
     height: 100px;
-    margin-left: 5%;
-    margin-top: 2%;
+    display: flex;
+    justify-content: center;
   }
   nav {
     position: absolute;

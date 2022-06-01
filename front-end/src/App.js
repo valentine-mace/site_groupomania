@@ -12,9 +12,9 @@ function App() {
     <Routes>
       <Route path="/" element={<ConnexionPage/>}></Route>
       <Route path="/signup" element={<InscriptionPage/>}></Route>
-      <Route path="/home" element={<Home/>}></Route>
-      <Route path="/profil/:id" element={<ProfilUser/>}></Route>
-      <Route path="/post/:id" element={<Post/>}></Route>
+      <Route path="/home/:id" element={<Home/>}></Route>
+      <Route path="/home/:id/profil/:id" element={<ProfilUser/>}></Route>
+      <Route path="/home/:id/post/:id" element={<Post/>}></Route>
     </Routes>
     </BrowserRouter>
   );

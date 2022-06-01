@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 
 const Home = () => {
 
+  const curent_path = window.location.pathname;
+
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const Home = () => {
         {posts.map((post) =>
           <NavLink
           to={{
-            pathname:"/post/"+ post.postId,   
+            pathname: curent_path + "/post/"+ post.postId,   
           }}>
             <div className="card">
               <h1>{post.title}</h1>

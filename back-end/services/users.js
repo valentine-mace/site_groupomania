@@ -123,14 +123,6 @@ async function getUser(userId){
   return rows;
 }
 
-async function getUserId(identifier){
-  const rows = await db.query(
-    `SELECT userId
-    FROM users WHERE identifier = '${identifier}';`
-  );
-  console.log(rows);
-  return rows;
-}
 
 //fonction pour créer un utilisateur - inscription
 async function createUser(user){
@@ -186,7 +178,6 @@ async function createUser(user){
   }
 }
 
-//PROB ICIIIIII
 async function isLogged(password,correct_password){
  return await bcrypt.compare(password, correct_password[0].password);
 }
@@ -202,29 +193,14 @@ async function findUser(user){
     FROM users WHERE identifier = '${identifier}' `
   );
   if(rows.length == 0){
-    return 0;
+    return false;
   }
   else{
     const correct_password = await db.query(
       `SELECT password
       FROM users WHERE identifier = '${identifier}'`
     );
-    let isOk = await isLogged(password,correct_password);
-    console.log("chouuu",isOk);
-    // let isOk = bcrypt.compare(password, correct_password[0].password);
-    // isOk.then(function(validPass){
-    //   return validPass;
-    // });
-    // let test = isOk;
-    // console.log("jpp", test);
-    // if(isOk){
-    //   console.log("match");
-    //   return 2;
-    // }else{
-    //   console.log("wrong");
-    //   return 1;
-    // }
-
+    return await isLogged(password,correct_password);
   }
 
 }
@@ -653,5 +629,5 @@ module.exports = {
   getAllLikes,
   getAllDislikes,
   getRecentPosts,
-  getUserId
+
 }
