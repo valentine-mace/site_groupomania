@@ -257,9 +257,8 @@ async function updateUser(userId, user){
 }
 
 //fonction pour créer un post
-async function createPost(userId,post){
+async function createPost(req,userId,post){
   date = new Date();
-  //`${req.protocol}://${req.get('host')}/images/${post.filename}`;
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +
     ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
@@ -267,8 +266,7 @@ async function createPost(userId,post){
     ('00' + date.getUTCHours()).slice(-2) + ':' + 
     ('00' + date.getUTCMinutes()).slice(-2) + ':' + 
     ('00' + date.getUTCSeconds()).slice(-2);
-  // 'LOAD_FILE(${post.image})',
-  image_path = "C:\Users\Valentine Macé\Desktop";
+  //post.image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
   const result = db.query(
     `INSERT INTO posts(title,content,date, image,userId)
     VALUES

@@ -35,9 +35,9 @@ const Home = () => {
     event.preventDefault();
 
     const { title, content, image } = document.forms[0];
-    console.log(image.files[0]);
+    // console.log(image.files[0]);
 
-    const test = "test";
+    const test = image.files[0];
 
     const post = {
       title : title.value,
