@@ -226,13 +226,13 @@ async function deleteUser(userId){
     `DELETE FROM users WHERE userId=${userId}`
   );
 
-  let message = 'Error in deleting user';
+  let message = false;
 
   if (result.affectedRows) {
-    message = 'User deleted successfully';
+    message = true;
   }
 
-  return {message};
+  return message;
 }
 
 //fonction pour mettre à jour les informations d'un utiliusateur

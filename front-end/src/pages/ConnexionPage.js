@@ -25,12 +25,12 @@ const ConnexionPage = () => {
 
     const user = await findUser(credentials);
     const isLogged = user.data.isLogged;
-    const userId = user.data.userId[0].userId;
 
     if(!isLogged){
       alert("Votre identifiant ou mot de passe est incorrect.");
     }
     else{
+      const userId = user.data.userId[0].userId;
       navigate("/home/" + userId, { replace: true });
     }
 

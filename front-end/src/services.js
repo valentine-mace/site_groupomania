@@ -33,6 +33,10 @@ class DataService {
   //   return await (http.delete(`/users/${userId}/post/${postId}`));
   // }
 
+  async deleteUser(userId) {
+    return await (http.delete(`/users/${userId}`));
+  }
+
   async findUser(user){
     return await (http.post(`/users/login`, user));
   }
