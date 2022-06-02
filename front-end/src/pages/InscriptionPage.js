@@ -27,7 +27,7 @@ const InscriptionPage = () => {
    
     if(isCreated == true){
       const userId = user.data.userId[0].userId;
-      navigate("/home/" + userId, { replace: true });
+      navigate("/home/userId=" + userId, { replace: true });
     }else{
       alert("Identifiant incorrect.");
     }

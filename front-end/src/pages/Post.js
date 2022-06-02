@@ -10,8 +10,9 @@ const Post = () => {
   const [dislike, setDislike] = useState([]);
   const [comment, setComment] = useState([]);
 
+  const url_split = window.location.href.split('/');
   const postId = useParams();
-  const userId = 2;
+  const userId = url_split[4];
 
   useEffect(() => {
 
