@@ -72,6 +72,7 @@ router.put('/:userId', async function(req, res, next) {
   }
 });
 
+// upload.single('image')
 //poster un post
 router.post('/:userId/post', async function(req, res, next) {
   try {

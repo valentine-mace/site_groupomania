@@ -2,7 +2,8 @@ import React, {useState, useEffect} from "react";
 import Header from "../components/Header";
 import DataService from "../services.js";
 import { NavLink } from "react-router-dom";
-import { useParams} from "react-router-dom"
+import { useParams} from "react-router-dom";
+
 
 const Home = () => {
 
@@ -33,7 +34,8 @@ const Home = () => {
 
     event.preventDefault();
 
-    const { title, content } = document.forms[0];
+    const { title, content, image } = document.forms[0];
+    console.log(image.files[0]);
 
     const test = "test";
 
@@ -44,7 +46,6 @@ const Home = () => {
     }
 
     const createPost = await DataService.createPost(userId,post);
-    console.log(createPost);
   }
 
   return (
@@ -63,10 +64,10 @@ const Home = () => {
               <label>Contenu</label>
               <input type="text" name="content" required />
             </div>
-            {/* <div className="image-field" >
+            <div className="image-field" >
               <label>Image</label>
               <input type="file" name="image" required />
-            </div> */}
+            </div>
             <div className="button">
               <input type="submit" />
             </div>

@@ -1,9 +1,21 @@
 const express = require('express');
 const bodyParser =  require("body-parser");
 const userRoutes = require('./routes/users');
-// const dotenv = require("dotenv");
-// dotenv.config();
+const path = require('path');
+const multer = require('multer');
 
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images')
+  },
+  filename: (req, file, cb) => {
+    console.log(filename);
+    cb(null, Date.now()+ path.extname(file.originalname) )
+  }
+})
+
+const upload = multer({storage: storage});
 
 const app = express();
 
@@ -17,9 +29,6 @@ next();
 
 app.use(bodyParser.json());
 app.use(express.json());
-
-//pour multer
-//app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //routes
 app.use('/users', userRoutes);
