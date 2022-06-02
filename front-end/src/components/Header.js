@@ -9,7 +9,6 @@ const Header = () => {
   const current_pathname = window.location.pathname;
   const userId = useParams().id;
   let location = useLocation().pathname;
-  console.log(location);
   return (
     <div className="header">
       <NavLink to= {"/home/" + userId} >

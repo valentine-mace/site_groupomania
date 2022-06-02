@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import InscriptionPage from "./pages/InscriptionPage";
 import ProfilUser from "./pages/ProfilUser";
 import Post from "./pages/Post";
+import Posts from "./pages/Posts";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/home/:id" element={<Home/>}></Route>
       <Route path="/home/:id/profil/:id" element={<ProfilUser/>}></Route>
       <Route path="/home/:id/post/:id" element={<Post/>}></Route>
+      <Route path="/home/:id/posts" element={<Posts/>}></Route>
     </Routes>
     </BrowserRouter>
   );

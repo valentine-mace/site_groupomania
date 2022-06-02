@@ -274,19 +274,8 @@ async function createPost(userId,post){
     VALUES
     ('${post.title}', '${post.content}','${date}', '${post.image}','${userId}');`
   );
-  // const insertImage = db.query(
-  // `INSERT INTO posts(image) 
-  // SELECT BulkColumn 
-  // FROM Openrowset( Bulk ${image_path}, Single_Blob) as img;`
-  // );
 
-  // let message = 'Error in creating new post';
-
-  // if (result.affectedRows) {
-  //   message = 'New post created successfully';
-  // }
-
-  // return {message};
+  return true;
 }
 
 //fonction pour supprimer post
@@ -609,7 +598,7 @@ async function getRecentPosts(userId){
       `SELECT *
       FROM posts ORDER BY date desc;`
     );
-    return rows.slice(-3);
+    return rows.slice(-6);
   }
   else
   {

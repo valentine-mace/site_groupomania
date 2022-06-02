@@ -1,5 +1,6 @@
 .header {
   background-color: white;
+  display: flex;
   img{
     width: 340px;
     height: 100px;
@@ -8,21 +9,24 @@
   }
   nav {
     position: absolute;
+    display: flex;
+    left: 70%;
     top: 5%;
-    left: 90%;
     font-size: 2rem;
 
     ul {
-      display: flex;
-
+      right: 40%;
+      background-color:white;
       a {
         text-decoration: none;
-        width: 102px;
-        text-align: center;
         color: #FD2D01;
+        background-color:white;
         &:hover {
           font-weight: 900;
           border-bottom: 5px solid #FD2D01;
+        }
+        li{
+          right: 20%;
         }
       }
 

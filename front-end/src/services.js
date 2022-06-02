@@ -45,9 +45,14 @@ class DataService {
     return await (http.post(`/users/signup`, user));
   }
 
+  async createPost(userId, user){
+    return await (http.post(`/users/${userId}/post`, user));
+  }
 
+  async getRecentPosts(userId) {
+    return await(http.get(`/users/${userId}/recentPosts`));
+  }
 
-  
 
   // get(id) {
   //   return http.get(`/tutorials/${id}`);
