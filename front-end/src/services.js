@@ -57,6 +57,14 @@ class DataService {
     return await(http.get(`/users/${userId}/recentPosts`));
   }
 
+  async likePost(userId,postId){
+    return await (http.post(`/users/${userId}/post/${postId}/like`));
+  }
+
+  async dislikePost(userId,postId){
+    return await (http.post(`/users/${userId}/post/${postId}/dislike`));
+  }
+
 
   // get(id) {
   //   return http.get(`/tutorials/${id}`);

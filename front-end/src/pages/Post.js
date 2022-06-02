@@ -11,7 +11,7 @@ const Post = () => {
   const [comment, setComment] = useState([]);
 
   const postId = useParams();
-  const userId = 1;
+  const userId = 2;
 
   useEffect(() => {
 
@@ -49,6 +49,18 @@ const Post = () => {
     return final_date;
   }
 
+  async function likePost(){
+
+    const isLiked = await DataService.likePost(userId,postId.id);
+    window.location.reload();
+  }
+
+  async function dislikePost(){
+
+    const isDisliked = await DataService.dislikePost(userId,postId.id);
+    window.location.reload();
+  }
+
   //to complete - delete function
   // async function deletePost(){
     
@@ -66,6 +78,8 @@ const Post = () => {
             <p>{post.content}</p>
             <p>Nombre de likes: {like}</p>
             <p>Nombre de dislikes: {dislike}</p>
+            <button onClick={likePost}>Like</button>
+            <button onClick={dislikePost}>Dislike</button>
             {comment.map((comment) =>
                 <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)}</p>,
                 // {comment.userId == userId &&

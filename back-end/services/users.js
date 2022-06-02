@@ -439,7 +439,7 @@ async function getAllComments(userId,postId,post){
   }
 }
 
-async function likePost(userId,postId,post){
+async function likePost(userId,postId){
   const rows = await db.query(
     `SELECT userId
     FROM users WHERE userId = '${userId}' `
@@ -457,12 +457,7 @@ async function likePost(userId,postId,post){
         ('1','0','${userId}','${postId}');`
       );
 
-      let message = 'Error in updating post';
-
-      if (result.affectedRows) {
-        message = 'Post liked successfully';
-      }
-      return {message};
+        return true;
     }
     else{
       if(likeAlready[0].likesNb == "0")
@@ -478,18 +473,19 @@ async function likePost(userId,postId,post){
           `DELETE FROM likes
           WHERE userId = '${userId}' AND postId = '${postId}';`
           ); 
+
+        return true;
       }
     }
 
   }
   else{
-    let message = 'No authorization';
-    return {message};
+    return false;
   }
 
 }
 
-async function dislikePost(userId,postId,post){
+async function dislikePost(userId,postId){
   const rows = await db.query(
     `SELECT userId
     FROM users WHERE userId = '${userId}' `
@@ -507,12 +503,7 @@ async function dislikePost(userId,postId,post){
         ('0','1','${userId}','${postId}');`
       );
 
-      let message = 'Error in disliking post';
-
-      if (result.affectedRows) {
-        message = 'Post disliked successfully';
-      }
-      return {message};
+        return true;
     }
     else{
       if(dislikeAlready[0].dislikesNb == "0")
@@ -521,6 +512,8 @@ async function dislikePost(userId,postId,post){
         `UPDATE likes SET likesNb = "0", dislikesNb = "1"
         WHERE userId = '${userId}' AND postId = '${postId}';`
         ); 
+
+        return true;
       }
       else if(dislikeAlready[0].dislikesNb == "1")
       {
@@ -528,13 +521,14 @@ async function dislikePost(userId,postId,post){
           `DELETE FROM likes
           WHERE userId = '${userId}' AND postId = '${postId}';`
           ); 
+
+        return true;
       }
     }
 
   }
   else{
-    let message = 'No authorization';
-    return {message};
+    return false;
   }
 
 }
