@@ -336,7 +336,7 @@ async function getAllPosts(userId){
   if(userExist.length !== 0){
     const rows = await db.query(
       `SELECT postId, title, content, image, date,userId
-      FROM posts`
+      FROM posts ORDER BY date desc`
     );
     return rows;
   }
@@ -586,6 +586,7 @@ async function getAllDislikes(userId,postId,post){
   }
 }
 
+//prob ici
 async function getRecentPosts(userId){
   const userExist = await db.query(
     `SELECT userId, identifier, name, surname, password

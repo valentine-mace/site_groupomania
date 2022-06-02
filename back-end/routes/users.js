@@ -75,7 +75,7 @@ router.put('/:userId', async function(req, res, next) {
 
 // upload.single('image')
 //poster un post
-router.post('/:userId/post', multer, async function(req, res, next) {
+router.post('/:userId/post', async function(req, res, next) {
   try {
     res.json(await users.createPost(req,req.params.userId,req.body));
   } catch (err) {
