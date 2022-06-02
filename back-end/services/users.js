@@ -123,7 +123,6 @@ async function getUser(userId){
   return rows;
 }
 
-
 //fonction pour créer un utilisateur - inscription
 async function createUser(user){
   let identifier = user.identifier;
@@ -193,6 +192,10 @@ async function findUser(user){
     FROM users WHERE identifier = '${identifier}' `
   );
   if(rows.length == 0){
+    let user = {
+      isLogged : false,
+      userId : 0
+    }
     return false;
   }
   else{
