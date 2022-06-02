@@ -32,6 +32,7 @@ const ConnexionPage = () => {
     else{
       const userId = user.data.userId[0].userId;
       navigate("/home/" + userId, { replace: true });
+
     }
 
 

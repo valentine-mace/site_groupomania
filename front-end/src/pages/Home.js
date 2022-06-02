@@ -43,7 +43,6 @@ const Home = () => {
               <p>{post.content}</p>
             </div>
           </NavLink>
-   
         )}
       </div>
     </div>

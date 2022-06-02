@@ -12,12 +12,11 @@ const Header = () => {
       <NavLink to= {"/home/" + userId} >
       <img src={logo} alt="Logo Groupomania"></img>
       </NavLink>
-
-      {/* <nav>
+      <nav>
         <ul>
-          <NavLink to={current_pathname + "/profil" + userId}><li>Mon profil</li></NavLink>
+          <NavLink to={current_pathname + "/profil/" + userId}><li>Mon profil</li></NavLink>
         </ul>
-      </nav> */}
+      </nav>
     </div>
   );
 }
