@@ -139,7 +139,6 @@ async function createUser(user)
   );
   if(isSalariman.length !== 0 )
   {
-    console.log("ici");
     const rows = await db.query(
       `SELECT userId, identifier, name, surname, password
       FROM users WHERE identifier = '${identifier}' `
@@ -147,7 +146,6 @@ async function createUser(user)
     //on vérifie d'abord que l'utilisateur n'existe pas
     if(rows.length == 0)
     {
-      console.log("testaquoi");
       const isAdminFromIdentifier = identifier.split('@')[1];
       if(isAdminFromIdentifier == "groupomania.fr")
       {
@@ -167,12 +165,10 @@ async function createUser(user)
         FROM users WHERE identifier = '${identifier}' `
       );
       if (result.affectedRows) {
-        console.log("testttptn");
         userToSend={
           isCreated : true,
           userId : userId
         }
-        console.log(userToSend);
         return userToSend;
       }
     }

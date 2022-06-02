@@ -23,14 +23,14 @@ const InscriptionPage = () => {
     }
 
     const user = await createUser(credentials);
-    const isCreated = user.data;
-    console.log(isCreated);
-
-    // if(isCreated == true){
-    //   navigate("/home/" + userId, { replace: true });
-    // }else{
-    //   alert("Identifiant incorrect.");
-    // }
+    const isCreated = user.data.isCreated;
+   
+    if(isCreated == true){
+      const userId = user.data.userId[0].userId;
+      navigate("/home/" + userId, { replace: true });
+    }else{
+      alert("Identifiant incorrect.");
+    }
 
   }
   return (

@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from "react";
 import Header from "../components/Header";
 import DataService from "../services.js";
+import { useParams} from "react-router-dom"
 
 const ProfilUser = () => {
 
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
+  const userId = useParams().id;
 
-    const userId = 1;
+  useEffect(() => {
 
     const fetchUser = async () => {
       const getUser = await DataService.getUser(userId);
