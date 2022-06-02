@@ -124,9 +124,14 @@ async function getUser(userId){
 }
 
 //fonction pour créer un utilisateur - inscription
-async function createUser(user){
+async function createUser(user)
+{
   let identifier = user.identifier;
   let password = user.password;
+  let userToSend={
+    isCreated : false,
+    userId : 0
+  }
   //on vérifie d'abord que l'utilisateur fait bien partie de l'entreprise
   const isSalariman = await db.query(
     `SELECT identifier, name, surname
@@ -134,12 +139,15 @@ async function createUser(user){
   );
   if(isSalariman.length !== 0 )
   {
+    console.log("ici");
     const rows = await db.query(
       `SELECT userId, identifier, name, surname, password
       FROM users WHERE identifier = '${identifier}' `
     );
     //on vérifie d'abord que l'utilisateur n'existe pas
-    if(rows.length == 0){
+    if(rows.length == 0)
+    {
+      console.log("testaquoi");
       const isAdminFromIdentifier = identifier.split('@')[1];
       if(isAdminFromIdentifier == "groupomania.fr")
       {
@@ -148,32 +156,33 @@ async function createUser(user){
       else{
         isAdmin = 'TRUE';
       }
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(password, salt, function(err, hash) {
-          
-            const result = db.query(
-              `INSERT INTO users(identifier,name,surname,password,isAdmin)
-              VALUES
-              ('${identifier}', '${user.name}', '${user.surname}', '${hash}', ${isAdmin} );`
-            );
-          let message = 'Error in creating new user';
-
-          if (result.affectedRows) {
-            message = 'New user created successfully';
-          }
-      
-          return {message};
-        });
-      });
+      const hash = bcrypt.hashSync(password, 5);
+      const result = await db.query(
+        `INSERT INTO users(identifier,name,surname,password,isAdmin)
+        VALUES
+        ('${identifier}', '${user.name}', '${user.surname}', '${hash}', ${isAdmin} );`
+      );
+      const userId = await db.query(
+        `SELECT userId
+        FROM users WHERE identifier = '${identifier}' `
+      );
+      if (result.affectedRows) {
+        console.log("testttptn");
+        userToSend={
+          isCreated : true,
+          userId : userId
+        }
+        console.log(userToSend);
+        return userToSend;
+      }
     }
     else{
-      let message = 'User already exists.';
-      return {message};
+      return userToSend;
     }
   }
-  else{
-    let message = 'Not part of the company.';
-    return {message};
+  else
+  {
+    return userToSend;
   }
 }
 
@@ -183,7 +192,6 @@ async function isLogged(password,correct_password){
 
 //fonction pour trouver un utilisateur - connexion
 async function findUser(user){
-  console.log("bon endroit");
   let identifier = user.identifier;
   let password = user.password;
   //d'abord on vérifie que l'utilisateur existe

@@ -37,6 +37,10 @@ class DataService {
     return await (http.post(`/users/login`, user));
   }
 
+  async createUser(user){
+    return await (http.post(`/users/signup`, user));
+  }
+
 
 
   
