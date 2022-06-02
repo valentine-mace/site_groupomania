@@ -238,22 +238,13 @@ async function deleteUser(userId){
 //fonction pour mettre à jour les informations d'un utiliusateur
 async function updateUser(userId, user){
     let password = user.password;
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(password, salt, function(err, hash) {
-        const result = db.query(
-          `UPDATE users SET name="${user.name}", surname="${user.surname}", password="${hash}"
-          WHERE userId=${userId};` 
-        );
-        
-        let message = 'Error in updating new user';
+    const hash = bcrypt.hashSync(password, 5);
+    const result = await db.query(
+      `UPDATE users SET name="${user.name}", surname="${user.surname}", password="${hash}"
+      WHERE userId=${userId};` 
+    );
 
-        if (result.affectedRows) {
-          message = 'New user updated successfully';
-        }
-    
-        return {message};
-       });
-    });
+    return true;
 }
 
 //fonction pour créer un post
