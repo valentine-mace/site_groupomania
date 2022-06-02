@@ -9,11 +9,9 @@ const ConnexionPage = () => {
 
   let navigate = useNavigate();
 
-
   const findUser = async (credentials) => {
     return await DataService.findUser(credentials);
   }
-
 
   async function handleSubmit(event){
     event.preventDefault();
@@ -26,22 +24,17 @@ const ConnexionPage = () => {
     }
 
     const user = await findUser(credentials);
-    //const isLogged = user.data;
-    //const isLogged = false;
-    const userId = 1;
-    console.log(user);
-    console.log(user.data);
-    //prob ici ptnnnn
+    const isLogged = user.data.isLogged;
+    const userId = user.data.userId[0].userId;
 
-    // if(!isLogged){
-    //   alert("Votre identifiant ou mot de passe est incorrect.");
-    // }
-    // else{
-    //   navigate("/home/" + userId, { replace: true });
-    // }
+    if(!isLogged){
+      alert("Votre identifiant ou mot de passe est incorrect.");
+    }
+    else{
+      navigate("/home/" + userId, { replace: true });
+    }
 
 
-    
   };
 
   return (

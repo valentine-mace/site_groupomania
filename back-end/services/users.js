@@ -200,7 +200,15 @@ async function findUser(user){
       `SELECT password
       FROM users WHERE identifier = '${identifier}'`
     );
-    return await isLogged(password,correct_password);
+    const userId = await db.query(
+      `SELECT userId
+      FROM users WHERE identifier = '${identifier}'`
+    );
+    let user = {
+      isLogged : await isLogged(password,correct_password),
+      userId : userId
+    }
+    return user;
   }
 
 }
