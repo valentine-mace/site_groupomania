@@ -72,6 +72,24 @@ const Post = () => {
 
   }
 
+  async function postComment(){
+  
+    const content  = 
+    {
+      content: document.querySelector('input').value
+    } 
+    const comment = await DataService.postComment(userId,postId.id,content);
+    window.location.reload();
+
+  }
+
+  async function deleteComment(commentId){
+  
+    const commentToDelete = await DataService.deleteComment(userId,postId.id,commentId);
+    window.location.reload();
+
+  }
+
   //to complete - delete function
   // async function deletePost(){
     
@@ -82,35 +100,35 @@ const Post = () => {
 
   return (
     <div>
-        {post.map((post) =>
-          <div className="post">
-            <h1>{post.title}</h1>
-            <h4>Posté le: {sqlToJsDate(post.date)} </h4>
-            <p>{post.content}</p>
-            <p>Nombre de likes: {like}</p>
-            <p>Nombre de dislikes: {dislike}</p>
-            <button onClick={likePost}>Like</button>
-            <button onClick={dislikePost}>Dislike</button>
-            {comment.map((comment) =>
-                <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)},                 
-                {comment.userId == userId &&
-                  <button>Supprimer</button>
-                }</p>
-            )}
-            <div>
+      {post.map((post) =>
+        <div className="post">
+          <h1>{post.title}</h1>
+          <h4>Posté le: {sqlToJsDate(post.date)} </h4>
+          <p>{post.content}</p>
+          <p>Nombre de likes: {like}</p>
+          <p>Nombre de dislikes: {dislike}</p>
+          <button onClick={likePost}>Like</button>
+          <button onClick={dislikePost}>Dislike</button>
+          {comment.map((comment) =>
+            <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)},
+              {comment.userId == userId &&
+                <button onClick={() => deleteComment(comment.commentId)}>Supprimer</button>
+              }</p>
+          )}
+          <div>
             <form>
-            <input type="text" name="content" placeholder="Ecrire un commentaire..." />
-            <button onClick={postComment}>Envoyer</button>
+              <input type="text" name="content" placeholder="Ecrire un commentaire..." />
+              <button onClick={postComment}>Envoyer</button>
             </form>
-            </div>
-            {/* {post.userId === userId &&
+          </div>
+          {/* {post.userId === userId &&
             <div>
-              <button onClick={() => deletePost()}>Supprimer</button>
+              <button>Supprimer</button>
               <button>Modifier</button>
             </div>
-            } */}
+          } */}
 
-          </div>  
+        </div>
       )}
     </div>
   );
