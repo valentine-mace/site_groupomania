@@ -40,7 +40,6 @@ const Post = () => {
     }
     fetchComments();
 
-
   }, []);
 
   function sqlToJsDate(sqlDate){
@@ -60,6 +59,17 @@ const Post = () => {
 
     const isDisliked = await DataService.dislikePost(userId,postId.id);
     window.location.reload();
+  }
+
+  async function postComment(){
+  
+    const content  = 
+    {
+      content: document.querySelector('input').value
+    } 
+    const comment = await DataService.postComment(userId,postId.id,content);
+    window.location.reload();
+
   }
 
   //to complete - delete function
@@ -89,12 +99,18 @@ const Post = () => {
                 //   </div>
                 // }
             )}
-            {post.userId === userId &&
             <div>
-              {/* <button onClick={() => deletePost()}>Supprimer</button> */}
+            <form>
+            <input type="text" name="content" placeholder="Ecrire un commentaire..." />
+            <button onClick={postComment}>Envoyer</button>
+            </form>
+            </div>
+            {/* {post.userId === userId &&
+            <div>
+              <button onClick={() => deletePost()}>Supprimer</button>
               <button>Modifier</button>
             </div>
-            }
+            } */}
 
           </div>  
       )}
