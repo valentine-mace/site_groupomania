@@ -92,12 +92,10 @@ const Post = () => {
             <button onClick={likePost}>Like</button>
             <button onClick={dislikePost}>Dislike</button>
             {comment.map((comment) =>
-                <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)}</p>,
-                // {comment.userId == userId &&
-                //   <div>
-                //     <button>Supprimer</button>
-                //   </div>
-                // }
+                <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)},                 
+                {comment.userId == userId &&
+                  <button>Supprimer</button>
+                }</p>
             )}
             <div>
             <form>
