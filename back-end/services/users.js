@@ -580,7 +580,7 @@ async function getRecentPosts(userId){
   if(userExist.length !== 0){
     const rows = await db.query(
       `SELECT *
-      FROM posts ORDER BY date desc;`
+      FROM posts ORDER BY date ASC;`
     );
     return rows.slice(-6);
   }

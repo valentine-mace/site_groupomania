@@ -17,7 +17,12 @@ const Home = () => {
 
     const fetchPosts = async () => {
       const allPosts = await DataService.getRecentPosts(userId);
-      setPosts(allPosts.data);
+      var posts = [];
+      posts.push(allPosts.data);
+      var postsReversed = [];
+      postsReversed = posts[0].reverse();
+      setPosts(postsReversed);
+
     }
     fetchPosts();
 
@@ -46,6 +51,8 @@ const Home = () => {
     }
 
     const createPost = await DataService.createPost(userId,post);
+
+    window.location.reload();
   }
 
   return (
