@@ -1,6 +1,7 @@
 import React, {useState, useEffect}  from "react";
 import DataService from "../services.js";
-import { useParams} from "react-router-dom"
+import { useParams} from "react-router-dom";
+import Header from "../components/Header";
 
 
 const Post = () => {
@@ -100,6 +101,7 @@ const Post = () => {
 
   return (
     <div>
+      <Header/>
       {post.map((post) =>
         <div className="post">
           <h1>{post.title}</h1>

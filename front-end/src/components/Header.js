@@ -7,7 +7,9 @@ import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const current_pathname = window.location.pathname;
-  const userId = useParams().id;
+  //const userId = useParams().id;
+  const url_split = window.location.href.split('/');
+  const userId = url_split[4];
   let location = useLocation().pathname;
   return (
     <div className="header">
