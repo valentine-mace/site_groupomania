@@ -58,7 +58,6 @@ const Home = () => {
   return (
     <div>
       <Header/>
-      <h1>Home</h1>
       <div className="home">
         <div className="createPost">
           <h1>Ecrivez un post</h1>
@@ -76,7 +75,7 @@ const Home = () => {
               <input type="file" name="image" required />
             </div>
             <div className="button">
-              <input type="submit" />
+              <input type="submit" value="Publier" />
             </div>
           </form>
         </div>
@@ -87,12 +86,12 @@ const Home = () => {
             <NavLink to={{ pathname: curent_path + "/posts"}}>
               <h5>Afficher plus</h5></NavLink>
           </div>
-          {posts.map((post) =>
+          {posts.map((post, index) =>
             <NavLink
             to={{
               pathname: curent_path + "/post/"+ post.postId,   
             }}>
-              <div className="card">
+              <div className="card" key={index}>
                 <h1>{post.title}</h1>
                 <h4>Posté le: {sqlToJsDate(post.date)} </h4>
                 <p>{post.content}</p>

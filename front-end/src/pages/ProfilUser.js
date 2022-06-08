@@ -43,17 +43,23 @@ const ProfilUser = () => {
 
     const { name, surname, pass } = document.forms[0];
 
-    const credentials = {
-      name : name.value,
-      surname : surname.value,
-      password : pass.value
+    if((name.value == "") || (surname.value == "") || (pass.value == "")){
+        alert("Merci de remplir tous les champs pour valider les changements.");
     }
 
-    console.log(credentials);
+    else{
 
-    const user = await DataService.updateUser(userId, credentials);
+      const credentials = {
+        name : name.value,
+        surname : surname.value,
+        password : pass.value
+      }
 
-    window.location.reload();
+      const user = await DataService.updateUser(userId, credentials);
+
+      window.location.reload();
+
+    }
     
   }
 
