@@ -9,6 +9,10 @@ class DataService {
     return await(http.get(`/users/${userId}`));
   }
 
+  async getAdmin(userId) {
+    return await(http.get(`/users/${userId}/admin`));
+  }
+
   async getAllPosts(userId) {
     return await(http.get(`/users/${userId}/posts`));
   }
@@ -29,9 +33,9 @@ class DataService {
     return await(http.get(`/users/${userId}/post/${postId}/comments`));
   }
 
-  // async deletePost(userId,postId) {
-  //   return await (http.delete(`/users/${userId}/post/${postId}`));
-  // }
+  async deletePost(userId,postId) {
+    return await (http.delete(`/users/${userId}/post/${postId}`));
+  }
 
   async deleteUser(userId) {
     return await (http.delete(`/users/${userId}`));

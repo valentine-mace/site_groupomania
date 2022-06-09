@@ -123,6 +123,19 @@ async function getUser(userId){
   return rows;
 }
 
+async function getAdmin(userId){
+  const isAdmin = await db.query(
+    `SELECT isAdmin
+    FROM users WHERE userId = '${userId}' `
+  );
+  if(isAdmin[0].isAdmin == 1){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
 //fonction pour créer un utilisateur - inscription
 async function createUser(user)
 {
@@ -600,6 +613,7 @@ module.exports = {
   initializeWebsite,
   getUsers,
   getUser,
+  getAdmin,
   createUser,
   deleteUser,
   findUser,

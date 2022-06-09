@@ -2,14 +2,18 @@ import React, {useState, useEffect}  from "react";
 import DataService from "../services.js";
 import { useParams} from "react-router-dom";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 
 const Post = () => {
+
+  let navigate = useNavigate();
 
   const [post, setPost] = useState([]);
   const [like, setLike] = useState([]);
   const [dislike, setDislike] = useState([]);
   const [comment, setComment] = useState([]);
+  const [isAuthorized, setIsAuthorized] = useState();
 
   const url_split = window.location.href.split('/');
   const postId = useParams();
@@ -36,10 +40,16 @@ const Post = () => {
     fetchDislikes();
 
     const fetchComments = async () => {
-      const comments = await DataService.getAllComments(2,postId.id);
+      const comments = await DataService.getAllComments(userId,postId.id);
       setComment(comments.data);
     }
     fetchComments();
+
+    const fetchAuthorization = async () => {
+      const isAdmin = await DataService.getAdmin(userId);
+      setIsAuthorized(isAdmin.data);
+    }
+    fetchAuthorization();
 
   }, []);
 
@@ -73,17 +83,6 @@ const Post = () => {
 
   }
 
-  async function postComment(){
-  
-    const content  = 
-    {
-      content: document.querySelector('input').value
-    } 
-    const comment = await DataService.postComment(userId,postId.id,content);
-    window.location.reload();
-
-  }
-
   async function deleteComment(commentId){
   
     const commentToDelete = await DataService.deleteComment(userId,postId.id,commentId);
@@ -92,12 +91,12 @@ const Post = () => {
   }
 
   //to complete - delete function
-  // async function deletePost(){
+  async function deletePost(){
     
-  //   const deletePost = await DataService.deletePost(2,postId.id);
-  //   return deletePost;
+    const deletePost = await DataService.deletePost(userId,postId.id);
+    navigate("/home/" + userId, { replace: true });
 
-  // }
+  }
 
   return (
     <div>
@@ -113,9 +112,10 @@ const Post = () => {
           <button onClick={dislikePost}>Dislike</button>
           {comment.map((comment) =>
             <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)},
-              {comment.userId == userId &&
+              {(comment.userId == userId || isAuthorized == true) &&
                 <button onClick={() => deleteComment(comment.commentId)}>Supprimer</button>
-              }</p>
+              }
+              </p>
           )}
           <div>
             <form>
@@ -123,13 +123,10 @@ const Post = () => {
               <button onClick={postComment}>Envoyer</button>
             </form>
           </div>
-          {/* {post.userId === userId &&
             <div>
-              <button>Supprimer</button>
-              <button>Modifier</button>
+              <button onClick={deletePost}>Supprimer post</button>
+              <button>Modifier post</button>
             </div>
-          } */}
-
         </div>
       )}
     </div>

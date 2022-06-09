@@ -33,6 +33,15 @@ router.get('/:userId', async function(req, res, next) {
   }
 });
 
+router.get('/:userId/admin', async function(req, res, next) {
+  try {
+    res.json(await users.getAdmin(req.params.userId,req.query.page));
+  } catch (err) {
+    console.error(`Error while getting admin `, err.message);
+    next(err);
+  }
+});
+
 //créer un compte utilisateur
 router.post('/signup', async function(req, res, next) {
   try {
