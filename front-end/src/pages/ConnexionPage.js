@@ -41,7 +41,6 @@ const ConnexionPage = () => {
   return (
    <div className="connexion-page">
      <Header/>
-     <h1>Connexion</h1>
      <form onSubmit={handleSubmit}>
        <div className="ident-field">
          <label>Identifiant </label>
@@ -52,7 +51,7 @@ const ConnexionPage = () => {
          <input type="password" name="pass" required />
        </div>
        <div className="button">
-         <input type="submit" />
+         <input type="submit" value="Connexion" />
        </div>
      </form>
      <div className="inscription">

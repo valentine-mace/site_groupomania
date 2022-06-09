@@ -36,7 +36,6 @@ const InscriptionPage = () => {
   return (
     <div className="inscription-page">
       <Header/>
-      <h1>Inscription</h1>
       <form onSubmit={handleSubmit}>
         <div className="ident-field">
           <label>Identifiant </label>
@@ -55,7 +54,7 @@ const InscriptionPage = () => {
           <input type="password" name="pass" required />
         </div>
         <div className="button">
-          <input type="submit" />
+          <input type="submit" value="Inscription" />
         </div>
       </form>
     </div>

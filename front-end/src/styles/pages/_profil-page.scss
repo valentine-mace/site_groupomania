@@ -1,0 +1,67 @@
+.profil-page {
+  form{
+    text-align: center;
+    margin-top: 2%;
+    .ident-field{
+      margin-bottom: 2%;
+      text-align: center;
+      justify-content: center;
+      font-size: 200%;
+      display: flex;
+      flex-direction: row;
+      p{
+        margin-left: 2%;
+      }
+    }
+    .name-field{
+      margin-bottom: 2%;
+      font-size: 200%;
+      input{
+        font-size: 60%;
+        margin-left: 6%;
+        padding-right: 6%;
+      }
+    }
+    .surname-field{
+      margin-bottom: 2%;
+      font-size: 200%;
+      input{
+        font-size: 60%;
+        margin-left: 2%;
+        padding-right: 6%;
+      }
+    }
+    .pass-field{
+      margin-bottom: 2%;
+      font-size: 200%;
+      input{
+        font-size: 60%;
+        margin-left: 2.1%;
+        padding-right: 6%;
+      }
+    }
+    .button{
+      margin-top: 3%;
+      input{
+        padding-top:1%;
+        padding-bottom:1%;
+        padding-left:2%;
+        padding-right:2%;
+        font-size: 160%;
+      }
+    }
+  }
+  .delete-button{
+    text-align: center;
+    margin-top: 2%;
+    button{
+    padding-top:1%;
+    padding-bottom:1%;
+    padding-left:2%;
+    padding-right:2%;
+    font-size: 160%;
+    background-color: $rouge;
+    }
+
+  }
+}

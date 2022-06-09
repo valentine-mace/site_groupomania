@@ -65,9 +65,8 @@ const ProfilUser = () => {
 
 
   return (
-    <div>
+    <div className="profil-page">
       <Header/>
-      <h1>Profil</h1>
       {users.map((user) =>
       <form onSubmit={handleSubmit}>
         <div className="ident-field">
@@ -90,17 +89,10 @@ const ProfilUser = () => {
           <input type="submit" value="Valider les changements" />
         </div>
       </form>
-        )}
-      <button onClick={deleteUser}>Supprimer mon compte</button>
-      {/* <form>
-
-        <div>
-          <h1>Identifiant: {user.identifier}</h1>
-          <h1>Nom de famille: {user.surname}</h1>
-          <h1>Mot de passe: *****</h1>
-        </div>
-
-      </form> */}
+      )}
+      <div className="delete-button">
+        <button onClick={deleteUser}>Supprimer mon compte</button>
+      </div>
     </div>
   );
 }

@@ -98,14 +98,42 @@ const Post = () => {
 
   }
 
+  async function updatePost(){
+
+    const { title, content } = document.forms[0];
+
+    console.log(document.forms[0]);
+
+    if((title.value == "") || (content.value == "")){
+        alert("Merci de remplir tous les champs pour valider les changements.");
+    }
+    else{
+
+      const post = {
+        title : title.value,
+        content : content.value,
+      }
+
+      const updatePost = await DataService.updatePost(userId, postId.id, post);
+
+      window.location.reload();
+
+    }
+
+  }
+
   return (
     <div>
       <Header/>
       {post.map((post) =>
         <div className="post">
-          <h1>{post.title}</h1>
-          <h4>Posté le: {sqlToJsDate(post.date)} </h4>
-          <p>{post.content}</p>
+          <form>
+            <div>
+              <input type="text" name="title" placeholder={post.title}/>
+            </div>
+            <input type="text" name="content" placeholder={post.content}/>
+            <h4>Posté le: {sqlToJsDate(post.date)} </h4>
+          </form>
           <p>Nombre de likes: {like}</p>
           <p>Nombre de dislikes: {dislike}</p>
           <button onClick={likePost}>Like</button>
@@ -125,7 +153,7 @@ const Post = () => {
           </div>
             <div>
               <button onClick={deletePost}>Supprimer post</button>
-              <button>Modifier post</button>
+              <button onClick={updatePost}>Modifier post</button>
             </div>
         </div>
       )}
