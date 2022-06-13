@@ -94,7 +94,7 @@ router.post('/:userId/post', async function(req, res, next) {
 });
 
 //récupérer tous les posts
-router.get('/:userId/posts', async function(req, res, next) {
+router.get('/:userId/post', async function(req, res, next) {
   try {
     res.json(await users.getAllPosts(req.params.userId,req.query.page));
   } catch (err) {

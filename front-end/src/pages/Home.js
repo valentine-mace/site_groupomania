@@ -83,7 +83,7 @@ const Home = () => {
           <div className="texte">
             <h1 className="posts_recents">Posts récents</h1>
             <div>
-            <NavLink to={{ pathname: curent_path + "/posts" }}>
+            <NavLink to={{ pathname: curent_path + "/post" }}>
             <h1 className="afficher_plus">+ Afficher plus</h1></NavLink>
             </div>
           </div>

@@ -1,0 +1,9 @@
+.posts {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  h4,h1,p{
+    color: black;
+  }
+}

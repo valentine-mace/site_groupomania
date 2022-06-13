@@ -33,22 +33,19 @@ const Posts = () => {
   return (
     <div>
       <Header/>
-      <h1>Tous les posts</h1>
-      <div className="home">
-        <div className="posts">
-          {posts.map((post) =>
-            <NavLink
-            to={{
-              pathname: curent_path + "/post/"+ post.postId,   
-            }}>
-              <div className="card">
-                <h1>{post.title}</h1>
-                <h4>Posté le: {sqlToJsDate(post.date)} </h4>
-                <p>{post.content}</p>
-              </div>
-            </NavLink>
-          )}
-        </div>
+      <div className="posts">
+        {posts.map((post) =>
+          <NavLink
+          to={{
+            pathname: curent_path + "/" + post.postId,   
+          }}>
+            <div className="card">
+              <h1>{post.title}</h1>
+              <h4>Posté le: {sqlToJsDate(post.date)} </h4>
+              <p>{post.content}</p>
+            </div>
+          </NavLink>
+        )}
       </div>
     </div>
 

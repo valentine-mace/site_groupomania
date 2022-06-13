@@ -16,7 +16,7 @@ function App() {
       <Route path="/home/:id" element={<Home/>}></Route>
       <Route path="/home/:id/profil/:id" element={<ProfilUser/>}></Route>
       <Route path="/home/:id/post/:id" element={<Post/>}></Route>
-      <Route path="/home/:id/posts" element={<Posts/>}></Route>
+      <Route path="/home/:id/post" element={<Posts/>}></Route>
     </Routes>
     </BrowserRouter>
   );

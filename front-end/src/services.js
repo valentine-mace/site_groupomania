@@ -14,7 +14,7 @@ class DataService {
   }
 
   async getAllPosts(userId) {
-    return await(http.get(`/users/${userId}/posts`));
+    return await(http.get(`/users/${userId}/post`));
   }
 
   async getPost(userId, postId) {

@@ -15,11 +15,18 @@ const Header = () => {
       <NavLink to= {"/home/" + userId} >
       <img src={logo} alt="Logo Groupomania"></img>
       </NavLink>
-      {location == "/home/" + userId &&
+      {((location === "/home/" + userId) || (location === "/home/" + userId + "/posts")) &&
         <nav>
           <ul>
             <NavLink to={current_pathname + "/profil/" + userId}><li>Mon profil</li></NavLink>
           </ul>
+          <ul>
+            <NavLink to={"/"}><li>Se déconnecter</li></NavLink>
+          </ul>
+        </nav>  
+      }
+      { (location === "/home/" + userId + "/profil/" + userId) &&
+        <nav>
           <ul>
             <NavLink to={"/"}><li>Se déconnecter</li></NavLink>
           </ul>
