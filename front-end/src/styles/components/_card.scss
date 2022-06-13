@@ -1,5 +1,4 @@
 .card {
-  flex: 1 0 25%;
   min-width: 260px;
   max-width: 280px;
   height: 200px;
@@ -7,47 +6,31 @@
   border : 2px solid;
   border-radius: 2px;
   border-color: black;
-  margin: 20px;
+  margin-right: 15px;
+  margin-top: 10px;
   padding: 26px 15px 30px;
   position: relative;
   overflow: hidden;
  
   h1 {
-    letter-spacing: 1px;
-    line-height: 30px;
+    font-size: 1.2em;
     border-bottom: 2px solid;
     text-align: center;
-    background: lighten($gris, 60%);
     color: black;
-  }
-  h5 {
-    color: $gris;
-    letter-spacing: 1px;
-    font-size: 1.2rem;
-    font-weight: 300;
-    text-decoration: none;
+    background: lighten($gris, 60%);
   }
   h4 {
-    letter-spacing: 1px;
-    font-size: 1.2rem;
-    margin-top: -4px;
+    font-size: 1em;
+    margin-top: 4px;
     background: lighten($gris, 60%);
     font-style: italic;
     text-decoration: none;
   }
-
-  // h3 {
-  //   letter-spacing: 1px;
-  //   font-size: 1.4rem;
-  //   margin-top: 10px;
-  //   background: lighten($gris, 60%);
-  // }
   p {
     color: $gris;
     background: lighten($gris, 60%);
     margin-top: 20px;
-    font-size: 1.6rem;
-    line-height: 20px;
+    font-size: 0.8rem;
     height: 160px;
     overflow-y: scroll;
     text-decoration: none;
@@ -57,15 +40,15 @@
     }
   }
 
-  img {
-    width: 80%;
-    height: 254px;
-    object-fit: cover;
-    object-position: top;
-    display: block;
-    margin: 0 auto;
-    border-radius: 50px;
-    box-shadow: 0 8px 1px rgba(255, 255, 255, 0.1),
-      0 16px 1px rgba(255, 255, 255, 0.05);
-  }
+  // img {
+  //   width: 80%;
+  //   height: 254px;
+  //   object-fit: cover;
+  //   object-position: top;
+  //   display: block;
+  //   margin: 0 auto;
+  //   border-radius: 50px;
+  //   box-shadow: 0 8px 1px rgba(255, 255, 255, 0.1),
+  //     0 16px 1px rgba(255, 255, 255, 0.05);
+  // }
 }

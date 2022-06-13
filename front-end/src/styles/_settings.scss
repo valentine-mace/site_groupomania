@@ -1,28 +1,24 @@
 
 @font-face {
   font-family: "font-1";
-  src: url(../assets/fonts/Dongle-Regular.ttf);
-}
-@font-face {
-  font-family: "font-2";
-  src: url(../assets/fonts/Dongle-Light.ttf);
+  src: url(../assets/fonts/Lato-Black.ttf);
 }
 
-$font-1: "font-1", sans-serif;
-$font-2: "font-2", sans-serif;
+
+$lato: "lato", sans-serif;
 
 $rouge: #FD2D01;
 $rose: #FFD7D7;
 $gris: #4E5166;
 $black: #060d2c;
 $rose-clair: #FBEDF4;
-$white: rgb(238, 238, 238);
+$white: white;
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $font-2;
+  font-family: $lato;
   background : $rose-clair;
   text-decoration: none;
   list-style: none;
