@@ -1,13 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./icon-left-font.png";
-import { useParams} from "react-router-dom"
 import { useLocation } from "react-router-dom";
+
 
 
 const Header = () => {
   const current_pathname = window.location.pathname;
-  //const userId = useParams().id;
   const url_split = window.location.href.split('/');
   const userId = url_split[4];
   let location = useLocation().pathname;

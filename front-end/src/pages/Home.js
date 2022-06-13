@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import DataService from "../services.js";
 import { NavLink } from "react-router-dom";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 const Home = () => {
@@ -28,14 +28,14 @@ const Home = () => {
 
   }, []);
 
-  function sqlToJsDate(sqlDate){
+  function sqlToJsDate(sqlDate) {
 
-    let final_date= sqlDate.substr(0,sqlDate.length-14);
+    let final_date = sqlDate.substr(0, sqlDate.length - 14);
 
     return final_date;
   }
 
-  async function handleSubmit(event){
+  async function handleSubmit(event) {
 
     event.preventDefault();
 
@@ -45,22 +45,22 @@ const Home = () => {
     const test = image.files[0];
 
     const post = {
-      title : title.value,
-      content : content.value,
-      image : test
+      title: title.value,
+      content: content.value,
+      image: test
     }
 
-    const createPost = await DataService.createPost(userId,post);
+    const createPost = await DataService.createPost(userId, post);
 
     window.location.reload();
   }
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="home">
-        <div className="createPost">
-          <h1>Ecrivez un post</h1>
+        <div className="createPost_display">
+          <h1>Ecrivez un post:</h1>
           <form onSubmit={handleSubmit}>
             <div className="title-field">
               <label>Titre </label>
@@ -80,24 +80,27 @@ const Home = () => {
           </form>
         </div>
         <div className="posts_display">
-          <h1>Posts récents</h1>
-          <div className="posts">
-          <div className="afficher-plus">
-            <NavLink to={{ pathname: curent_path + "/posts"}}>
-              <h5>Afficher plus</h5></NavLink>
+          <div className="texte">
+            <h1 className="posts_recents">Posts récents</h1>
+            <div>
+            <NavLink to={{ pathname: curent_path + "/posts" }}>
+            <h1 className="afficher_plus">+ Afficher plus</h1></NavLink>
+            </div>
           </div>
-          {posts.map((post, index) =>
-            <NavLink
-            to={{
-              pathname: curent_path + "/post/"+ post.postId,   
-            }}>
-              <div className="card" key={index}>
-                <h1>{post.title}</h1>
-                <h4>Posté le: {sqlToJsDate(post.date)} </h4>
-                <p>{post.content}</p>
-              </div>
-            </NavLink>
-          )}
+          <div className="posts">
+
+            {posts.map((post, index) =>
+              <NavLink
+                to={{
+                  pathname: curent_path + "/post/" + post.postId,
+                }}>
+                <div className="card" key={index}>
+                  <h1>{post.title}</h1>
+                  <h4>Posté le: {sqlToJsDate(post.date)} </h4>
+                  <p>{post.content}</p>
+                </div>
+              </NavLink>
+            )}
           </div>
         </div>
       </div>

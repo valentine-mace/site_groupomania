@@ -1,6 +1,7 @@
 .header {
   background-color: white;
   display: flex;
+  border-bottom: 2px solid;
   img{
     width: 340px;
     height: 100px;
@@ -8,14 +9,11 @@
     justify-content: center;
   }
   nav {
-    position: absolute;
     display: flex;
-    left: 70%;
-    top: 5%;
+    margin-left: 50%;
     font-size: 2rem;
-
+    background-color:white;
     ul {
-      right: 40%;
       background-color:white;
       a {
         text-decoration: none;
@@ -26,7 +24,8 @@
           border-bottom: 5px solid #FD2D01;
         }
         li{
-          right: 20%;
+          background-color:white;
+          margin-right: 10%;
         }
       }
 

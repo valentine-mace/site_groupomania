@@ -367,7 +367,7 @@ async function updatePost(userId,postId,post){
     );
     if(rows[0].userId == userId){
       const result = await db.query(
-      `UPDATE posts SET title="${post.title}", content="${post.content}", image="${post.image}", date="${date}"
+      `UPDATE posts SET content="${post.content}", image="${post.image}", date="${date}"
       WHERE postId=${postId};` 
       );
 
