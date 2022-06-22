@@ -22,7 +22,6 @@ const ProfilUser = () => {
     }
     fetchUser();
 
- 
   }, []);
 
   async function deleteUser()
@@ -47,7 +46,8 @@ const ProfilUser = () => {
         alert("Merci de remplir tous les champs pour valider les changements.");
     }
 
-    else{
+    else
+    {
 
       const credentials = {
         name : name.value,
