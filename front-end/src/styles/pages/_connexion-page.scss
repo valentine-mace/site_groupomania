@@ -1,28 +1,31 @@
 .connexion-page {
   form{
-    // border: 2px solid;
-    // margin-left: 20%;
-    // margin-right: 20%;
     text-align: center;
-    margin-top: 6%;
+    margin-top: 3%;
     .ident-field{
       margin-bottom: 2%;
       font-size: 200%;
+      display: flex;
+      flex-direction: column;
       input{
-        font-size: 60%;
-        margin-left: 4%;
-        padding-left: 3%;
-        padding-right: 3%;
+        height: 40px;
+        width: 20%;
+        padding: 1%;
+        margin: auto;
+        margin-top: 2%;
       }
     }
     .pass-field{
       margin-bottom: 2%;
       font-size: 200%;
+      display: flex;
+      flex-direction: column;
       input{
-        font-size: 60%;
-        margin-left: 2%;
-        padding-left: 3%;
-        padding-right: 3%;
+        height: 40px;
+        width: 20%;
+        padding: 1%;
+        margin: auto;
+        margin-top: 2%;
       }
     }
     .button{
@@ -33,6 +36,7 @@
         padding-left:3%;
         padding-right:3%;
         font-size: 180%;
+        cursor: pointer;
       }
     }
   }
@@ -46,6 +50,8 @@
       font-size: 180%;
       padding-left: 1%;
       padding-right: 1%;
+      margin-top: 2%;
+      cursor: pointer;
     }
   }
 }

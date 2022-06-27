@@ -14,6 +14,7 @@ const ConnexionPage = () => {
   }
 
   async function handleSubmit(event){
+    
     event.preventDefault();
 
     const { identifier, pass } = document.forms[0];
