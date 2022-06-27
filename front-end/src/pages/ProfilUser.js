@@ -4,8 +4,6 @@ import DataService from "../services.js";
 import { useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
-
 const ProfilUser = () => {
 
   let navigate = useNavigate();
