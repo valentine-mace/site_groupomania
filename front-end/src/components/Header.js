@@ -15,7 +15,7 @@ const Header = () => {
       <NavLink to= {"/home/" + userId} >
       <img src={logo} alt="Logo Groupomania"></img>
       </NavLink>
-      {((location === "/home/" + userId) || (location === "/home/" + userId + "/posts")) &&
+      {((location === "/home/" + userId) || (location === "/home/" + userId + "/post")) &&
         <nav className="navigation">
           <ul>
             <div className="navi">

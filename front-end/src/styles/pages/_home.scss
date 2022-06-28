@@ -53,6 +53,7 @@
           background-color: white;
         }
         input{
+          margin-top: 3%;
           background-color: white;
         }
       }
@@ -66,7 +67,7 @@
           padding-left: 10%;
           padding-right: 10%;
           font-size: 1.4em;
-          background-color: white;
+          background: lighten($gris, 50%)
         }
       }
     }

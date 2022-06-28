@@ -152,9 +152,10 @@ const Post = () => {
           </div>
           <div className="commentaire">
           {comment.map((comment) =>
-            <p>Commentaire: {comment.content}, {sqlToJsDate(comment.date)},
+            <p className="commContent">{comment.content} 
+            <p className="commDate">-{sqlToJsDate(comment.date)}</p>
               {(comment.userId == userId || isAuthorized == true) &&
-                <p onClick={() => deleteComment(comment.commentId)}><FaTrash/></p>
+                <p className="commDelete" onClick={() => deleteComment(comment.commentId)}><FaTrash/></p>
               }
               </p>
           )}
