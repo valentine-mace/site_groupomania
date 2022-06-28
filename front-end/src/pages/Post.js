@@ -169,7 +169,7 @@ const Post = () => {
           </div>
           <div className="create_comment">
             <form>
-              <input id="comm" type="text" name="content" placeholder="Ecrire un commentaire..." />
+              <input id="comm" type="text" maxlength="50" name="content" placeholder="Ecrire un commentaire...(max 50 caractères)" />
               <button onClick={postComment}>Publier</button>
             </form>
           </div>
