@@ -17,19 +17,25 @@ const Post = () => {
   const [like, setLike] = useState([]);
   const [dislike, setDislike] = useState([]);
   const [comment, setComment] = useState([]);
-  const [isAuthorized, setIsAuthorized] = useState();
+  const [isAuthorized, setIsAdmin] = useState();
+  const [isAuthor, setIsAuthor] = useState();
+
 
   const url_split = window.location.href.split('/');
   const postId = useParams();
   const userId = url_split[4];
-  console.log(userId);
 
   useEffect(() => {
 
     const fetchPost = async () => {
       const aPost = await DataService.getPost(userId, postId.id);
       setPost(aPost.data);
-    }
+      if((aPost.data[0].userId) == userId){
+        setIsAuthor(true);
+      }else{
+        setIsAuthor(false);
+      }
+     }
     fetchPost();
 
     const fetchLikes = async () => {
@@ -50,11 +56,11 @@ const Post = () => {
     }
     fetchComments();
 
-    const fetchAuthorization = async () => {
+    const isAdmin = async () => {
       const isAdmin = await DataService.getAdmin(userId);
-      setIsAuthorized(isAdmin.data);
+      setIsAdmin(isAdmin.data);
     }
-    fetchAuthorization();
+    isAdmin();
 
   }, []);
 
@@ -123,8 +129,6 @@ const Post = () => {
 
   }
 
-
-
   return (
     <div>
       <Header />
@@ -134,10 +138,12 @@ const Post = () => {
             <h1>{post.title}</h1>
             <div className="titre">
               <h4>Posté le: {sqlToJsDate(post.date)}</h4>
+              {((isAuthor == true) || (isAuthorized == true)) &&
               <div className="actions">
                 <p onClick={deletePost}><FaTrash /></p>
                 <p onClick={updatePost}><FaRegEdit /></p>
               </div>
+              }   
             </div>
             <input type="text" name="content" className="content" placeholder={post.content} />
           </form>
