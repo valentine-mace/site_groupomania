@@ -261,7 +261,7 @@ async function updateUser(userId, user){
 }
 
 //fonction pour créer un post
-async function createPost(req,userId,post){
+async function createPost(userId,post){
   date = new Date();
   //on convertit dans le bon format que accepte la bdd mysql
   date = date.getUTCFullYear() + '-' +

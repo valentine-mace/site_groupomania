@@ -62,12 +62,12 @@ const Home = () => {
           <h1>Ecrivez un post:</h1>
           <form onSubmit={handleSubmit}>
             <div className="title-field">
-              <label>Titre </label>
-              <input type="text" name="title" required />
+              <label>Titre (max: 30 caractères) </label>
+              <input type="text" name="title" maxlength="50" required />
             </div>
             <div className="content-field" >
-              <label>Contenu</label>
-              <input type="text" name="content" required />
+              <label>Contenu (max: 300 caractères)</label>
+              <input type="text" name="content" maxlength="300" required />
             </div>
             <div className="image-field" >
               <label>Image</label>

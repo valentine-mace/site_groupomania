@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../services/users');
-const multer = require('../middleware/multer-config');
+const multer = require('multer');
+const upload = multer({dest:'images/'}).single("demo_image");
 
 //initialisation de la base de données avec création des tables
 router.get('/initialize', async function(req, res, next) {
@@ -84,9 +85,10 @@ router.put('/:userId', async function(req, res, next) {
 
 // upload.single('image')
 //poster un post
-router.post('/:userId/post', async function(req, res, next) {
+router.post('/:userId/post', upload, async function(req, res, next) {
   try {
-    res.json(await users.createPost(req,req.params.userId,req.body));
+    res.json(await users.createPost(req.params.userId,req.body));
+    // res.send(req.body.image);
   } catch (err) {
     console.error(`Error while creating post`, err.message);
     next(err);
