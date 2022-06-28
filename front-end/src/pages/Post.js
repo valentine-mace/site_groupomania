@@ -22,6 +22,7 @@ const Post = () => {
   const url_split = window.location.href.split('/');
   const postId = useParams();
   const userId = url_split[4];
+  console.log(userId);
 
   useEffect(() => {
 
@@ -60,8 +61,8 @@ const Post = () => {
   function sqlToJsDate(sqlDate) {
 
     let final_date = sqlDate.substr(0, sqlDate.length - 14);
+    return new Date(final_date).toLocaleDateString('fr');
 
-    return final_date;
   }
 
   async function likePost() {
@@ -121,6 +122,8 @@ const Post = () => {
     }
 
   }
+
+
 
   return (
     <div>

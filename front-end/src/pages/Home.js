@@ -31,8 +31,7 @@ const Home = () => {
   function sqlToJsDate(sqlDate) {
 
     let final_date = sqlDate.substr(0, sqlDate.length - 14);
-
-    return final_date;
+    return new Date(final_date).toLocaleDateString('fr');
   }
 
   async function handleSubmit(event) {
