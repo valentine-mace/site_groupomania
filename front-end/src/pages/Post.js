@@ -145,7 +145,7 @@ const Post = () => {
               </div>
               }   
             </div>
-            <input type="text" name="content" className="content" placeholder={post.content} />
+            <input type="text" name="content" maxlength="300" className="content" placeholder={post.content} />
           </form>
           <div className="likes_dislikes">
             <div className="likes">
